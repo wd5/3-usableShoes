@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load pagination_tags %}
+
+{% block center_col %}
+    <div class="faqs_page">
+        <h1>Отзывы <span class="faq_lnk"><a href="/faq/sendreview/" class="fancybox">Оставить отзыв</a></span></h1>
+        <div class="feedbacks">
+            {% autopaginate reviews 4 %}
+            {% for review in reviews %}
+                <div class="feedback">
+                    <div class="feedback_text">
+                        <p>{{ review.text }}</p>
+                    </div>
+                    <div class="feedback_author">— {{ review.name }}, {{ review.city }}</div>
+
+                    <div class="h_t"><img src="/media/img/h_t.png" alt="" /></div>
+                    <div class="h_r"><img src="/media/img/h_r.png" alt="" /></div>
+                    <div class="h_b"><img src="/media/img/h_b.png" alt="" /></div>
+                    <div class="h_l"><img src="/media/img/h_l.png" alt="" /></div>
+                </div>
+            {% empty %}
+                Отзывов пока нет
+            {% endfor %}
+            {% paginate %}
+
+        </div><!--/feedbacks-->
+    </div><!--/faqs_page-->
+{% endblock %}

@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% load thumbnail pages_extras products_extras orders_extras %}
+
+{% block class_div_h_hg %}bg2{% endblock %}
+
+{% block center_col %}
+    {% block_top_h product.category.title %}
+
+    {% block_catalog_submenu 'product' request.path product %}
+
+    <div class="item_page parent_blk">
+        <div class="item_l col">
+            <div class="item_imgs">
+                <div class="item_img_zl">
+                    {% thumbnail product.image "1000" upscale=0 as big %}
+                    {% thumbnail product.image "300x300" crop="center" as im %}
+                        <a href="{{ big.url }}" class="product_img fancybox" rel="{{ product.id }}"><img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="" /></a>
+                    {% endthumbnail %}
+                    {% endthumbnail %}
+                </div>
+
+                {% if attached_photos %}
+                    <ul class="item_imgs_menu">
+                        <li class="curr">
+                            {% thumbnail product.image "50x50" crop="center" as im %}
+                                <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="" />
+                            {% endthumbnail %}
+                        <div style="display: none;" class="replace_img">
+                            {% thumbnail product.image "1000" upscale=0 as big %}
+                            {% thumbnail product.image "300x300" crop="center" as im %}
+                                <a href="{{ big.url }}" class="product_img fancybox"><img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="" /></a>
+                            {% endthumbnail %}
+                            {% endthumbnail %}
+                        </div>
+                        </li>
+
+                        {% for photo in attached_photos %}
+                            <li>
+                                {% thumbnail photo.image "50x50" crop="center" as im %}
+                                    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="" />
+                                {% endthumbnail %}
+                                <div style="display: none;" class="replace_img">
+                                    {% thumbnail photo.image "1000" upscale=0 as big %}
+                                    {% thumbnail photo.image "300x300" crop="center" as im %}
+                                        <a href="{{ big.url }}" class="product_img fancybox" rel="{{ product.id }}"><img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="" /></a>
+                                    {% endthumbnail %}
+                                    {% endthumbnail %}
+                                </div>
+                            </li>
+                        {% endfor %}
+
+                    </ul>
+                {% endif %}
+
+            </div>
+        </div><!--/item_l-->
+
+        <div class="item_r col">
+            <h2>{{ product.title }} {% if product.art %}<span class="item_art">«{{ product.art }}»</span>{% endif %} </h2>
+
+            <div class="text">
+                <p>{{ product.description|safe }}</p>
+            </div>
+
+            <div class="item_share">сюда шару от яндекса</div>
+             <! -- #todo: сюда шару от яндекса -->
+
+            <div class="item_sizes">
+                <strong>Размер: </strong>
+                <ul>
+                    {% for size in product.get_sizes %}
+                        <li {% if forloop.first %}class="curr"{% endif %} ><a href="#" name="{{ size.id }}">{{ size.value }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            {% if product.material %}
+                <div class="item_mat"><strong>Материал:</strong> {{ product.material }}</div>
+            {% endif %}
+
+            <div class="item_page_price">{{ product.get_str_price }} <span>руб.</span> <input class="btn1 buy_btn" name="{{ product.id }}" type="button" value="Купить" /></div>
+        </div><!--/item_r-->
+    </div><!--/item_page-->
+
+    {% include 'products/products_list.html' %}
+
+{% endblock %}
+
+{% block cartbox %}
+    {% block_cart %}
+{% endblock %}

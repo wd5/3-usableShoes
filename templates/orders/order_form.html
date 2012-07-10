@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% load thumbnail siteblocks_extras pages_extras %}
+
+{% block title %}
+    Оформление заказа &mdash;
+{% endblock %}
+
+{% block banner %}{% endblock %}
+
+{% block center_class %} center_wide{% endblock %}
+
+{% block center_col %}
+    {% block_top_h 'Оформление заказа' %}
+    {{ order_form.errors }}
+    <form class="order_form" method="post" action="/order_form_step2/">
+        <div style="display: none;">{{ order_form.profile }}
+            {{ order_form.profile.errors }}
+            {{ order_form.order_carting }}
+            {{ order_form.order_carting.errors }}
+            {{ order_form.order_status }}
+            {{ order_form.order_status.errors }}</div>
+        <div class="order_form_h">
+            <span class="order_form_h_num">1</span>
+            <h2>Контактные данные</h2>
+            {% if not user.is_authenticated %}<span class="ifregistred">Уже зарегистрированы? <a href="#auth_form" class="fancybox">Войти</a></span>{% endif %}
+        </div>
+
+        <div class="input input1">
+            <label>Имя <span class="label_note">Имя получателя</span></label>
+            {{ order_form.first_name }}
+            {{ order_form.first_name.errors }}
+        </div>
+        <div class="input input1">
+            <label>Фамилия <span class="label_note">Фамилия получателя</span></label>
+            {{ order_form.last_name }}
+            {{ order_form.last_name.errors }}
+        </div>
+        <div class="input input1">
+            <label>E-mail <span class="label_note">Для входа на сайт</span></label>
+            {{ order_form.email }}
+            {{ order_form.email.errors }}
+        </div>
+        <div class="input input1">
+            <label>Телефон <span class="label_note">Для подтверждения</span></label>
+            {{ order_form.phone }}
+            {{ order_form.phone.errors }}
+        </div>
+
+        <div class="order_form_h">
+            <span class="order_form_h_num">2</span>
+            <h2>Получение товара</h2>
+        </div>
+
+        <ul class="order_menu">
+            <li {% if order_form.order_carting.value == 'moscow' %}class="curr"{% endif %}><a href="#" class="moscow">Доставка по Москве</a></li>
+            <li {% if order_form.order_carting.value == 'country' %}class="curr"{% endif %}><a href="#" class="country">Доставка по стране</a></li>
+            <li {% if order_form.order_carting.value == 'selfcarting' %}class="curr"{% endif %}><a href="#" class="selfcarting">Самовывоз</a></li>
+        </ul>
+
+        <div class="contact_info moscow" {% if order_form.order_carting.value != 'moscow' %}style="display: none;"{% endif %}>
+            {{ page_moscow.content|safe }}</div>
+
+        <div class="contact_info selfcarting" {% if order_form.order_carting.value != 'selfcarting' %}style="display: none;"{% endif %}>{{ page_selfcarting.content|safe }}</div>
+
+        <div class="contact_info country" {% if order_form.order_carting.value != 'country' %}style="display: none;"{% endif %}>
+            <div class="input input1">
+                <label>Город <span class="label_note">Город доставки</span></label>
+                {{ order_form.city }}
+                {{ order_form.city.errors }}
+                {{ order_form.non_field_errors  }}
+            </div>
+            <div class="input input1">
+                <label>Индекс <span class="label_note">Почтовый индекс</span></label>
+                {{ order_form.index }}
+                {{ order_form.index.errors }}
+                {{ order_form.non_field_errors  }}
+            </div>
+            <div class="input input2">
+                <label>Адрес <span class="label_note">Улица, дом, квартира</span></label>
+                {{ order_form.address }}
+                {{ order_form.address.errors }}
+                {{ order_form.non_field_errors  }}
+            </div>
+            <div class="textarea textarea1">
+                <label>Примечание <span class="label_note">Номер домофона или&nbsp;любая другая информация</span></label>
+                {{ order_form.note }}
+                {{ order_form.note.errors }}
+                {{ order_form.non_field_errors  }}
+            </div>
+        </div>
+
+        <div><input class="btn2 cart_submit" type="submit" name="" value="Отправить заказ" /></div>
+    </form>
+{% endblock %}
+
+{% block right_col %}
+{% endblock %}
+
+{% comment %}
+{% if cart_products and form %}
+    <h3>Ваш заказ</h3>
+    <p>{% for product in cart_products %}
+        {{ product.product.title }} - {{ product.count }}шт{% if forloop.last %}.{% else %},{% endif %}
+    {% endfor %}
+        На сумму <span>{{ cart_str_total }}</span> руб.</p>
+    <form action="" class="order_form" method="post">
+        <h3>Контактная информация</h3>
+        <div class="input">{{ form.fullname }}{{ form.fullname.errors }}</div>
+        <div class="input">{{ form.contact_info }}{{ form.contact_info.errors }}</div>
+        <div class="submit"><div><input type="button" class="send_order" value="Завершить оформление" /></div></div>
+    </form>
+{% endcomment %}
+{% comment %}<div class="order col">
+</div><!-- /order -->{% endcomment %}{% comment %}
+
+{% endif %}{% endcomment %}

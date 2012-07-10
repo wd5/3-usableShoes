@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% load thumbnail pages_extras products_extras orders_extras %}
+
+{% block center_col %}
+    {% block_top_h category.title %}
+
+    {% block_catalog_submenu 'categ' request.path category %}
+
+    {% include 'products/products_list.html' %}
+
+{% endblock %}
+
+{% block cartbox %}
+    {% block_cart %}
+{% endblock %}

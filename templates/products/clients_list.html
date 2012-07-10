@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% load thumbnail siteblocks_extras %}
+
+{% if page.title %}
+    {% block title %}
+        Клинеты &mdash;
+    {% endblock %}
+{% endif %}
+
+{% block center_col %}
+    <h1>Клиенты</h1>
+
+    <div class="clients">
+        {% for client in clients %}
+            <div class="client">
+                {% if client.image %}
+                    {% thumbnail client.image "120x90" crop="center" as im %}
+                        <img class="client_img" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="" />
+                    {% endthumbnail %}
+                {% endif %}
+                <div class="client_des">
+                    <h2>{{ client.title }}</h2>
+                    <div class="text">
+                        <p>{{ client.description }}</p>
+                    </div>
+                </div>
+                <div class="cl"></div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}

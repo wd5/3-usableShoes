@@ -1,0 +1,24 @@
+msgid "Orders"
+msgstr "Заказы"
+
+msgid "orders"
+msgstr "заказы"
+
+msgid "cart"
+msgstr "корзина"
+
+msgid "carts"
+msgstr "корзина"
+
+msgid "product_item"
+msgstr "товар"
+
+msgid "product_items"
+msgstr "товары"
+
+msgid "order_item"
+msgstr "заказ"
+
+msgid "order_items"
+msgstr "заказы"
+

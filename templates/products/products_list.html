@@ -1,0 +1,44 @@
+{% load thumbnail pagination_tags %}
+
+<div class="items{% if product %} similar_items{% endif %}">
+    {% if catalog %}
+        {% autopaginate catalog 12 %}
+        {% for item in catalog %}
+            <div class="item">
+                <div class="item_in parent_blk">
+                    <div class="item_img"><a href="{{ item.get_absolute_url }}" class="product_img">
+                        {% thumbnail item.image "120x120" crop="center" as im %}
+                            <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="" />
+                        {% endthumbnail %}
+                    </a></div>
+                    <div class="item_price">{{ item.get_str_price }} <span>руб.</span></div>
+                    <h3 class="item_name"><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></h3>
+                    {% if item.art %}<div class="item_art">«{{ item.art }}»</div>{% endif %}
+                    <input class="item_tocart" type="button" name="{{ item.id }}" value="" />
+                </div>
+            </div>
+        {% endfor %}
+        {% paginate %}
+    {% endif %}
+
+    {% if product %}
+        <h2>Похожие товары</h2>
+        {% for related_product in product.get_related_products %}
+            <div class="item">
+                <div class="item_in parent_blk">
+                    <div class="item_img"><a href="{{ related_product.get_absolute_url }}" class="product_img">
+                        {% thumbnail related_product.image "120x120" crop="center" as im %}
+                        <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="" />
+                        {% endthumbnail %}
+                    </a></div>
+                    <div class="item_price">{{ related_product.get_str_price }} <span>руб.</span></div>
+                    <h3 class="item_name"><a href="{{ related_product.get_absolute_url }}">{{ related_product.title }}</a></h3>
+                    {% if related_product.art %}
+                        <div class="item_art">«{{ related_product.art }}»</div>
+                    {% endif %}
+                    <input class="item_tocart" type="button" name="{{ related_product.id }}" value="" />
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+</div><!--/items-->

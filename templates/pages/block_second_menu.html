@@ -1,0 +1,8 @@
+{% if menu %}
+    <h2>Покупателям</h2>
+    <ul>
+        {% for menu_item in menu %}
+            <li><a href="{{ menu_item.get_absolute_url }}">{{ menu_item.title }}</a></li>
+        {% endfor %}
+    </ul>
+{% endif %}

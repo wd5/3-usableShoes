@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% load thumbnail pages_extras products_extras orders_extras %}
+
+{% block query_text %}{{ query }}{% endblock %}
+
+{% block center_col %}
+    {% block_top_h 'Результаты поиска' %}
+    {% block_catalog_submenu 'index' request.path '' %}
+    <h1>Результаты поиска по запросу &laquo;{{ query }}&raquo;</h1>
+    {% include 'products/products_list.html' %}
+{% endblock %}
+
+{% block cartbox %}
+    {% block_cart %}
+{% endblock %}

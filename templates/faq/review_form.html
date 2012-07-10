@@ -1,0 +1,18 @@
+<form class="faq_form" method="post" action="">
+	<div class="input input3">
+		<label>ФИО</label>
+        {{ review_form.name }}
+        {{ review_form.name.errors }}
+	</div>
+	<div class="input input3">
+		<label>Город</label>
+        {{ review_form.city }}
+        {{ review_form.city.errors }}
+	</div>
+	<div class="textarea textarea1">
+		<label>Отзыв</label>
+        {{ review_form.text }}
+        {{ review_form.text.errors }}
+	</div>
+	<div><input class="btn2 reg_submit" type="submit" id="send_review" value="Отправить отзыв" /></div>
+</form>

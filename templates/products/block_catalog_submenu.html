@@ -1,0 +1,45 @@
+<div class="catalog_submenu">
+
+    {% if dc %}
+        <div class="design_lnk"><a {% if dc_current == dc.get_absolute_url %}class="curr"{% endif %} href="{{ dc.get_absolute_url }}">{{ dc.title }}</a></div>
+    {% endif %}
+
+    {% if type == 'index' %}
+        <ul>
+            <li {% if current == '/catalog/hit/' %}class="curr"{% endif %}><a href="/catalog/hit/">Хиты продаж</a></li>
+            <li {% if current == '/catalog/sale/' %}class="curr"{% endif %}><a href="/catalog/sale/">Распродажа</a></li>
+            <li {% if current == '/catalog/new/' %}class="curr"{% endif %}><a href="/catalog/new/">Новые модели</a></li>
+        </ul>
+    {% endif %}
+
+    {% if type == 'categ' %}
+        <ul class="ul_s_types">
+            <li {% if current == category.get_absolute_url|add:'all/' or current == category.get_absolute_url %}class="curr"{% endif %}><a name='all' href="{% url show_category_by_type category.slug 'all' %}">Вся обувь</a></li>
+            <li {% if current == category.get_absolute_url|add:'female/' %}class="curr"{% endif %}><a name='female' href="{% url show_category_by_type category.slug 'female' %}">Женская</a></li>
+            <li {% if current == category.get_absolute_url|add:'male/' %}class="curr"{% endif %}><a name='male' href="{% url show_category_by_type category.slug 'male' %}">Мужская</a></li>
+            <li {% if current == category.get_absolute_url|add:'child/' %}class="curr"{% endif %}><a name='child' href="{% url show_category_by_type category.slug 'child' %}">Детская</a></li>
+        </ul>
+        <ul class="ul_sizes">
+            {% if sizes|length != 1 %}
+                <li class="curr"><a href="#" name="all">Все размеры</a></li>
+            {% endif %}
+            {% for size in sizes %}
+                <li {% if sizes|length == 1 %}class="curr"{% endif %}><a href="#" name="{{ size.id }}">{{ size.value }}</a></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if type == 'product' %}
+        <ul>
+            <li {% if product.s_type == 'female' %}class="curr"{% endif %}><a href="{% url show_category_by_type product.category.slug 'female' %}">Женская</a></li>
+            <li {% if product.s_type == 'male' %}class="curr"{% endif %}><a href="{% url show_category_by_type product.category.slug 'male' %}">Мужская</a></li>
+            <li {% if product.s_type == 'child' %}class="curr"{% endif %}><a href="{% url show_category_by_type product.category.slug 'child' %}">Детская</a></li>
+        </ul>
+    {% endif %}
+
+   <div class="cs_tail"></div>
+   <div class="cs_t"><img src="/media/img/cs_t.png" alt="" /></div>
+   <div class="cs_r"><img src="/media/img/cs_r.png" alt="" /></div>
+   <div class="cs_b"><img src="/media/img/cs_b.png" alt="" /></div>
+   <div class="cs_l"><img src="/media/img/cs_l.png" alt="" /></div>
+</div><!--/catalog_submenu-->

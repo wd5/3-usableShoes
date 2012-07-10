@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% load thumbnail siteblocks_extras %}
+
+{% block title %}
+    Ошибка при авторизации &mdash;
+{% endblock %}
+
+{% block center_col %}
+    {% if form.errors %}
+        {{ form.non_field_errors  }}
+        <form class="auth_form" id="auth_form" method="post" action="{% url auth_login %}?next={{ next_url }}">
+            <div class="input input3">
+                <label>E-mail:</label>
+                {{ auth_form.username }}{{ auth_form.username.errors }}<a href="/registration_form/">Зарегистрироваться</a>
+            </div>
+            <div class="input input3">
+                <label>Пароль:</label>
+                {{ auth_form.password }}{{ auth_form.password.errors }}<a href="/password/reset/">Восстановить пароль</a>
+            </div>
+            <div><input class="btn2 auth_submit" type="submit" value="Войти" /></div>
+        </form>
+    {% endif %}
+{% endblock %}
+
+
+

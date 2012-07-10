@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% load thumbnail siteblocks_extras pages_extras %}
+
+{% if page.title %}
+    {% block title %}
+        Личный кабинет &mdash;
+    {% endblock %}
+{% endif %}
+
+{% block center_col %}
+    {% block_top_h 'Личный кабинет' %}
+
+    <div class="personal_info">
+        <dl>
+            <dt>Имя и фамилия:</dt>
+            <dd>{{ user.profile.name }} {{ user.profile.last_name }}
+                {% if user.profile.name == '' and  user.profile.last_name == '' %}Не указаны{% endif %} </dd>
+            <dt>Электронная почта:</dt>
+            <dd>{{ user.email }}</dd>
+            <dt>Телефон:</dt>
+            <dd>{{ user.profile.phone|default:"Не указан" }}</dd>
+        </dl>
+        <a class="edit_lnk" href="/cabinet/edit_info_form/">Редактировать информацию</a>
+    </div><!--/personal_info-->
+
+    <div class="history">
+        <h2>История ваших заказов:</h2>
+
+        {% for order in orders %}
+            <div class="history_order">
+                <div class="history_status delivered">
+                    {% if order.order_status == 'processed' %}
+                        Обрабатывается
+                    {% endif %}{% if order.order_status == 'posted' %}
+                        Отправлен
+                    {% endif %}{% if order.order_status == 'delivered' %}
+                        Доставлен
+                    {% endif %}{% if order.order_status == 'cancelled' %}
+                        Отменен
+                    {% endif %}
+                </div>
+                <h3 class="history_num">Заказ № {{ order.id }}</h3>
+                <div class="history_price">Стоимость заказа:  {{ order.get_str_total }} рублей</div>
+                <div class="history_items">
+                    {% for order_product in order.get_products %}
+                        <h3 class="item_name"><a href="{{ order_product.product.get_absolute_url }}">{{ order_product.product.title }}</a></h3>
+                        <div class="item_art">{% if order_product.product.art %}«{{ order_product.product.art }}»{% endif %}</div>
+                    {% endfor %}
+                </div>
+                <div class="h_t"><img src="/media/img/h_t.png" alt="" /></div>
+                <div class="h_r"><img src="/media/img/h_r.png" alt="" /></div>
+                <div class="h_b"><img src="/media/img/h_b.png" alt="" /></div>
+                <div class="h_l"><img src="/media/img/h_l.png" alt="" /></div>
+            </div>
+        {% endfor %}
+
+        <div class="more"><a href="#">Ещё 2 заказа</a></div> <!-- todo: Ещё 2 заказа -->
+    </div><!--/history-->
+
+{% endblock %}

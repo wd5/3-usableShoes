@@ -1,0 +1,18 @@
+<form class="faq_form" method="post" action="">
+	<div class="input input3">
+		<label>Ваше имя</label>
+        {{ faq_form.name }}
+        {{ faq_form.name.errors }}
+	</div>
+	<div class="input input3">
+		<label>E-mail</label>
+        {{ faq_form.email }}
+        {{ faq_form.email.errors }}
+	</div>
+	<div class="textarea textarea1">
+		<label>Вопрос</label>
+        {{ faq_form.question }}
+        {{ faq_form.question.errors }}
+	</div>
+	<div><input class="btn2 reg_submit" type="submit" id="send_question" value="Отправить вопрос" /></div>
+</form>

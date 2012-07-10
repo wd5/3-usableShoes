@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% load thumbnail siteblocks_extras pages_extras %}
+
+{% block title %}
+    Оформление заказа &mdash;
+{% endblock %}
+
+{% block center_col %}
+    {% block_top_h 'Оформление заказа' %}
+
+    <div class="order_final">
+        <div class="text text_page">
+            <h1>Ваш заказ успешно оформлен под номером {{ order.id }}</h1>
+            <p>Вся информация о заказе выслана на контактный e-mail. Наш менеджер скоро с Вами свяжется чтобы уточнить время доставки.</p>
+            {% if reg_form %}
+                <p>Вы занесли уже большую часть информации, чтобы участвовать в наших акциях и специальных предложения. Мы советуем Вам зарегистрироваться на нашем сайте.</p>
+            {% endif %}
+        </div><!--/text-->
+        {% if reg_form %}
+            <form class="final_reg" method="post" action="/registration_form/">
+                <div style="display: none;">
+                    {{ reg_form.email }}
+                    {{ reg_form.username.errors }}
+                    {{ reg_form.email.errors }}
+                </div>
+                <div class="input input3">
+                    <label>Осталось только придумать пароль:</label>
+                    {{ reg_form.password1 }}
+                    {{ reg_form.password1.errors }}
+                </div>
+                <div class="input input3">
+                    <label>Повторение пароля:</label>
+                    {{ reg_form.password2 }}
+                    {{ reg_form.password2.errors }}
+                </div>
+                <input type="hidden" name="order_id" value="{{ order.id }}">
+                <div><input class="btn2 reg_submit" type="submit" value="Зарегистрироваться" /></div>
+            </form>
+        {% endif %}
+    </div><!--/order_final-->
+{% endblock %}

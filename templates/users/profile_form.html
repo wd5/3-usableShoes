@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% load thumbnail siteblocks_extras pages_extras %}
+
+{% block title %}
+    Редактировать информацию &mdash;
+{% endblock %}
+
+{% block center_col %}
+    {% block_top_h 'Редактировать информацию' %}
+    {{ errors }}
+
+<form class="edit_info_form" method="post" action="/edt_profile_info/">
+	<div class="input input3">
+		<label>Имя</label>
+        {{ profile_form.name }}
+        {{ profile_form.name.errors }}
+	</div>
+	<div class="input input3">
+		<label>Фамилия</label>
+        {{ profile_form.last_name }}
+        {{ profile_form.last_name.errors }}
+	</div>
+	<div class="input input3">
+		<label>E-mail</label>
+        {{ profile_form.user__email }}
+        {{ profile_form.user__email.errors }}
+	</div>
+	<div class="input input3">
+		<label>Телефон</label>
+        {{ profile_form.phone }}
+        {{ profile_form.phone.errors }}
+	</div>
+    <div style="display: none;">{{ profile_form.errors }}<br>{{ profile_form.id }}{{ profile_form.id.errors }}</div>
+	<div><input class="btn2 reg_submit" type="submit" value="Сохранить" /></div>
+</form>
+{% endblock %}

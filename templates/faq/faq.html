@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% load pagination_tags %}
+
+{% block center_col %}
+    <div class="faqs_page">
+        <h1>Вопросы-Ответы <span class="faq_lnk"><a href="/faq/sendquestion/" class="fancybox">Задать вопрос</a></span></h1>
+        <div class="faqs">
+            {% autopaginate questions 4 %}
+            {% for question in questions %}
+                <div class="faq">
+                    <div class="question">
+                        <div class="faq_author">{{ question.name }}, {{ question.pub_date|date:"j E Y" }}</div>
+                        <div class="faq_text"><p>{{ question.question }}</p></div>
+                    </div>
+                    {% if question.answer %}
+                        <div class="answer">
+                            <div class="faq_author">{{ question.author }}, {{ question.ans_date|date:"j E Y" }}</div>
+                            <div class="faq_text"><p>{{ question.answer }}</p></div>
+                        </div>
+                    {% endif %}
+                </div>
+            {% empty %}
+                Вопросов пока нет
+            {% endfor %}
+            {% paginate %}
+        </div><!--/faqs-->
+    </div><!--/faqs_page-->
+{% endblock %}

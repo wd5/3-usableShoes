@@ -1,0 +1,47 @@
+msgid "Products"
+msgstr "Товары"
+
+msgid "products"
+msgstr "товары"
+
+msgid "targets"
+msgstr "назначения"
+
+msgid "target"
+msgstr "назначение"
+
+msgid "categories"
+msgstr "категории"
+
+msgid "category"
+msgstr "категория"
+
+msgid "size"
+msgstr "размер"
+
+msgid "sizes"
+msgstr "размеры"
+
+msgid "product_items"
+msgstr "товары"
+
+msgid "product_item"
+msgstr "товар"
+
+msgid "phrases"
+msgstr "фразы для поиска"
+
+msgid "phrase"
+msgstr "фраза"
+
+msgid "product_photos"
+msgstr "изображения товара"
+
+msgid "product_photo"
+msgstr "изображение"
+
+msgid "clients"
+msgstr "клиенты"
+
+msgid "client"
+msgstr "клиент"

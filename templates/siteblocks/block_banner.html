@@ -1,0 +1,10 @@
+{% load thumbnail %}
+{% if banner %}
+    {% for one in banner %}
+        <div class="banner">
+            {% thumbnail one.image "140x250" crop="center" as im %}
+                <img title="{{ one.title }}" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="" />
+            {% endthumbnail %}
+        </div>
+    {% endfor %}
+{% endif %}

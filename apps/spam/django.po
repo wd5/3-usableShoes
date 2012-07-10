@@ -1,0 +1,6 @@
+msgid "Spam"
+msgstr "Рассылка"
+
+msgid "spam"
+msgstr "рассылка"
+
