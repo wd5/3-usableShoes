@@ -17,8 +17,16 @@
                     <input class="item_tocart" type="button" name="{{ item.id }}" value="" />
                 </div>
             </div>
+        {% empty %}
+
         {% endfor %}
         {% paginate %}
+    {% else %}
+        {% if not product %}
+            <div class="item">
+                В данной категории пока нет товаров.
+            </div>
+        {% endif %}
     {% endif %}
 
     {% if product %}

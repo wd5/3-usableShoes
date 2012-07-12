@@ -1,5 +1,7 @@
 <ul>
     {% for menu_item in menu %}
-        <li {% if current == menu_item.url or current == '/' and menu_item.url == '/catalog/' %}class="curr"{% endif %} ><a href="{{ menu_item.get_absolute_url }}">{{ menu_item.title }}</a></li>
+        <li {% if current == menu_item.url or current == '/' and menu_item.url == '/catalog/' %}class="curr"{% endif %}>
+            <a href="{{ menu_item.get_absolute_url }}">{{ menu_item.title }}</a>
+        </li>
     {% endfor %}
 </ul>

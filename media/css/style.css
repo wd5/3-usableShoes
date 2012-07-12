@@ -176,7 +176,7 @@ h3 {
 .menu li {
 	display: inline-block;
 	vertical-align: top;
-	margin: 0 16px 0 0;
+	margin: 0 14px 0 0;
 	height: 34px;
 	padding: 15px 9px 0 9px;
 }
@@ -201,6 +201,11 @@ h3 {
 }
 .menu_cab a {
 	color: #fcfbe8;
+}
+.logout {
+	font-size: 13px;
+	font-weight: normal;
+	margin-left: 10px;
 }
 /*menu-end*/
 
@@ -1433,6 +1438,9 @@ h2 .item_art {
 .edit_info_form .input {
 	display: block;
 	margin: 0 0 18px 0;
+}
+.edit_info_form .reg_submit {
+	margin-left: 0;
 }
 
 /*/edit_info_form*/

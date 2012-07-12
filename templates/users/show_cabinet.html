@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% load thumbnail siteblocks_extras pages_extras %}
+{% load thumbnail siteblocks_extras pages_extras pytils_numeral %}
 
 {% if page.title %}
     {% block title %}
@@ -24,7 +24,11 @@
         <a class="edit_lnk" href="/cabinet/edit_info_form/">Редактировать информацию</a>
     </div><!--/personal_info-->
 
-    <div class="history">
+    <div class="history load_block">
+        <input type="hidden" id="loaded_ids" autocomplete="off" value="{{ next_id_loaded_items }}">
+        <input type="hidden" id="a_name" autocomplete="off" value="orders">
+        <input type="hidden" id="m_name" autocomplete="off" value="Order">
+
         <h2>История ваших заказов:</h2>
 
         {% for order in orders %}
@@ -55,7 +59,11 @@
             </div>
         {% endfor %}
 
-        <div class="more"><a href="#">Ещё 2 заказа</a></div> <!-- todo: Ещё 2 заказа -->
+        {% if loaded_count %}
+            <div class="more">
+                <a href="#" class="load_items">Ещё {{ loaded_count }} заказ{{ loaded_count|choose_plural:",а,ов" }}</a>
+            </div>
+        {% endif %}
     </div><!--/history-->
 
 {% endblock %}

@@ -1,14 +1,19 @@
 # -*- coding: utf-8 -*-
 from django.conf.urls.defaults import patterns, include, url
 from django.contrib.auth import views as auth_views
+from django.views.decorators.csrf import csrf_exempt
 from apps.products.views import show_catalog_by_type, show_category, show_product, clients_list, load_catalog, search_products
 from apps.spam.views import add_subscribe, cancel_subscribe
 from apps.users.views import show_cabinet, edt_profile_info, show_profile_form, registration_form
+from apps.faq.views import review_list
+from apps.users.views import items_loader
+
 
 #url(r'^captcha/', include('captcha.urls')),
 
 urlpatterns = patterns('',
     url(r'^$',show_catalog_by_type, {'type':'all'}, name='index', ),
+    (r'^load_items/$',csrf_exempt(items_loader)),
     url(r'^catalog/$',show_catalog_by_type, {'type':'all'}, name='show_catalog', ),
     (r'^catalog/search/$',search_products,),
     url(r'^catalog/(?P<type>[^/]+)/$',show_catalog_by_type, name='show_catalog_by_type'),
@@ -20,6 +25,7 @@ urlpatterns = patterns('',
     (r'^clients/$',clients_list),
 
     url(r'^faq/', include('apps.faq.urls')),
+    url(r'^reviews/$',review_list, name='reviews_list'),
 
     (r'^add_subscribe_email/$', add_subscribe),
     (r'^cancel_subscribe/(?P<email>[^/]+)/$', cancel_subscribe),

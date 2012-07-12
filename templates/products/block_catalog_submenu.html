@@ -13,6 +13,7 @@
     {% endif %}
 
     {% if type == 'categ' %}
+        <input type="hidden" id="categ_id" value="{{ category.id }}">
         <ul class="ul_s_types">
             <li {% if current == category.get_absolute_url|add:'all/' or current == category.get_absolute_url %}class="curr"{% endif %}><a name='all' href="{% url show_category_by_type category.slug 'all' %}">Вся обувь</a></li>
             <li {% if current == category.get_absolute_url|add:'female/' %}class="curr"{% endif %}><a name='female' href="{% url show_category_by_type category.slug 'female' %}">Женская</a></li>

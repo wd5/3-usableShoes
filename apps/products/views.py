@@ -54,7 +54,7 @@ class ShowCategory(DetailView):
                 else:
                     sizes.append({'id': size.id, 'value': size.value, })
                     sizes_ids.append(size.id)
-            #sizes = list(set(sizes))
+                    #sizes = list(set(sizes))
         sizes.sort()
         setattr(self.object, 'sizes', sizes)
         return context
@@ -84,10 +84,10 @@ class ProductsSearch(TemplateView):
         except:
             q = ''
         qs = products.filter(
-            Q(title__icontains=q)|
-            Q(description__icontains=q)|
-            Q(material__icontains=q)|
-            Q(art__icontains=q)|
+            Q(title__icontains=q) |
+            Q(description__icontains=q) |
+            Q(material__icontains=q) |
+            Q(art__icontains=q) |
             Q(price__icontains=q)
         )
         context['catalog'] = qs
@@ -109,10 +109,19 @@ class LoadCatalogView(View):
         if not request.is_ajax():
             return HttpResponseRedirect('/')
         else:
-            if 'size' not in request.POST or 's_type' not in request.POST:
+            if 'size' not in request.POST or 's_type' not in request.POST or 'id_cat' not in request.POST:
+                return HttpResponseBadRequest()
+            try:
+                id_cat = int(request.POST['id_cat'])
+            except:
                 return HttpResponseBadRequest()
 
-            products = Product.objects.published()
+            try:
+                curr_categ = Category.objects.get(id=id_cat)
+            except Category.DoesNotExist:
+                return HttpResponseBadRequest()
+
+            products = curr_categ.get_products()
             size = request.POST['size']
             s_type = request.POST['s_type']
             if size != 'all':

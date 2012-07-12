@@ -1,0 +1,5 @@
+{% if items %}
+        {% include load_template %}
+        <input type="hidden" id="remaining_count" value="{{ remaining_count }}">
+        <input type="hidden" id="new_load_ids" value="{{ load_ids }}">
+{% endif %}

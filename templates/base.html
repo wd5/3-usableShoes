@@ -41,7 +41,7 @@
 
 		<div class="menu_cab">
             {% if user.is_authenticated %}
-                <a href="/cabinet/">{% if not user.profile.last_name and not user.profile.name %}Личный кабинет {% endif %} {{ user.profile.last_name }} {{ user.profile.name }}</a>
+                <a href="/cabinet/">Личный кабинет</a>
                 <a href="/logout/" class="logout" title="Выйти">выйти</a>
             {% else %}
                 <a href="#auth_form" class="fancybox">Личный кабинет</a>

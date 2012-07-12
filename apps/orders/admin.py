@@ -27,5 +27,5 @@ class OrderAdmin(admin.ModelAdmin):
     readonly_fields = ('create_date',)
     inlines = [OrderProductInlines]
 
-admin.site.register(Cart, CartAdmin)
+#admin.site.register(Cart, CartAdmin)
 admin.site.register(Order, OrderAdmin)

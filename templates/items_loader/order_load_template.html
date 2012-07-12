@@ -1,0 +1,35 @@
+{% load pytils_numeral thumbnail %}
+
+{% for item in items %}
+
+    <div class="history_order loaded" style="display: none;">
+        <div class="history_status delivered">
+            {% if item.order_status == 'processed' %}
+                Обрабатывается
+            {% endif %}{% if item.order_status == 'posted' %}
+                Отправлен
+            {% endif %}{% if item.order_status == 'delivered' %}
+                Доставлен
+            {% endif %}{% if item.order_status == 'cancelled' %}
+                Отменен
+            {% endif %}
+        </div>
+        <h3 class="history_num">Заказ № {{ item.id }}</h3>
+        <div class="history_price">Стоимость заказа:  {{ item.get_str_total }} рублей</div>
+        <div class="history_items">
+            {% for order_product in item.get_products %}
+                <h3 class="item_name"><a href="{{ order_product.product.get_absolute_url }}">{{ order_product.product.title }}</a></h3>
+                <div class="item_art">{% if order_product.product.art %}«{{ order_product.product.art }}»{% endif %}</div>
+            {% endfor %}
+        </div>
+        <div class="h_t"><img src="/media/img/h_t.png" alt="" /></div>
+        <div class="h_r"><img src="/media/img/h_r.png" alt="" /></div>
+        <div class="h_b"><img src="/media/img/h_b.png" alt="" /></div>
+        <div class="h_l"><img src="/media/img/h_l.png" alt="" /></div>
+    </div>
+
+{% endfor %}
+
+{% if remaining_count %}
+        <input type="hidden" id="remaining_count_text" value="Ещё {{ remaining_count }} заказ{{ remaining_count|choose_plural:",а,ов" }}">
+{% endif %}

@@ -37,12 +37,14 @@ $(function(){
         var el = $(this)
         var value = el.find('a').attr('name')
         var s_type = $('.ul_s_types li[class="curr"] a').attr('name')
+        var cat_id = $('#categ_id').val()
         el.parent().find('li').removeClass('curr');
         el.toggleClass('curr');
         $.ajax({
             url: "/load_catalog/",
             data: {
                 size:value,
+                id_cat:cat_id,
                 s_type:s_type
             },
             type: "POST",
@@ -111,6 +113,44 @@ $(function(){
                     {$('#fancybox-error').html(data)}
             }
         });
+        return false;
+    });
+
+    $('.load_items').live('click',function(){
+
+        var el = $(this);
+        var parent = $(this).parents('.load_block');
+        $.ajax({
+            url: "/load_items/",
+            data: {
+                load_ids: parent.find('#loaded_ids').val(),
+                m_name: parent.find('#m_name').val(),
+                a_name: parent.find('#a_name').val()
+            },
+            type: "POST",
+            success: function(data) {
+
+                parent.append(data)
+                parent.find('.loaded:eq(0)').fadeIn("fast", function (){ //появление по очереди
+                        $(this).next().fadeIn("fast", arguments.callee);
+                    });
+                //parent.find('.loaded').fadeIn('slow')  //простое появление
+                parent.find('#loaded_ids').val(parent.find('#new_load_ids').val())
+                parent.find('div').removeClass('loaded')
+                parent.find('.more').appendTo(parent)
+                var rctxt = parent.find('#remaining_count_text').val()
+                var rc = parent.find('#remaining_count').val()
+                if (rctxt!=undefined)
+                    {el.html(rctxt)}
+                if (rc<=0)
+                    {parent.find('.more').remove()}
+                parent.find('#remaining_count_text').remove()
+                parent.find('#new_load_ids').remove()
+                parent.find('#remaining_count').remove()
+
+            }
+        });
+
         return false;
     });
 
