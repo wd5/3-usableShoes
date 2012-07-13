@@ -3,9 +3,9 @@
 <p>Заказчик: {{ order.first_name }} {{ order.last_name }}</p>
 <p>E-mail: {{ order.email }}</p>
 <p>Телефон: {{ order.phone }}</p>
-<p>Тип доставки: {{ order.order_carting }}</p>
-<hr>
+<p>Тип доставки: {% if order.order_carting == 'country' %}Доставка по стране{% endif %}{% if order.order_carting == 'moscow' %}Доставка по Москве{% endif %}{% if order.order_carting == 'selfcarting' %}Самовывоз{% endif %}</p>
 {% if order.order_carting.value == 'country' %}
+<hr>
     <p>Город: {{ order.city }}</p>
     <p>Адрес: {{ order.address }}</p>
     <p>Индекс: {{ order.index }}</p>
