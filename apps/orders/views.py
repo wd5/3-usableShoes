@@ -324,7 +324,10 @@ class AddProdictToCartView(View):
                     product=product,
                     size=size,
                 )
-                cart_product.count += 1
+                if cart_product.is_deleted:
+                    cart_product.is_deleted = False
+                else:
+                    cart_product.count += 1
                 cart_product.save()
             except CartProduct.DoesNotExist:
                 CartProduct.objects.create(
