@@ -2,6 +2,10 @@
 
 {% load thumbnail pages_extras products_extras orders_extras %}
 
+{% block title %}
+   {{ category.title }} &mdash;
+{% endblock %}
+
 {% block center_col %}
     {% block_top_h category.title %}
 
