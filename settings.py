@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 DATABASE_NAME = u'usableShoes'
-PROJECT_NAME = u'practiceshoes'
+PROJECT_NAME = u'practiceshoes' # новое имя
 SITE_NAME = u'Практичная обувь'
 DEFAULT_FROM_EMAIL = u'support@practiceshoes.ru'
 
