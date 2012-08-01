@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 DATABASE_NAME = u'usableShoes'
-PROJECT_NAME = u'usableShoes'
+PROJECT_NAME = u'practiceshoes'
 SITE_NAME = u'Практичная обувь'
-DEFAULT_FROM_EMAIL = u'support@usableShoes.octweb.ru'
+DEFAULT_FROM_EMAIL = u'support@practiceshoes.ru'
 
 from config.base import *
 
