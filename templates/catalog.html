@@ -2,11 +2,26 @@
 
 {% load thumbnail pages_extras products_extras orders_extras %}
 
+{% block title %}
+    {% if request.path == '/catalog/hit/' %}
+        Хиты продаж
+    {% else %}
+        {% if request.path == '/catalog/new/' %}
+            Новые модели
+        {% else %}
+            {% if request.path == '/catalog/sale/' %}
+                Распродажа
+            {% else %}
+                Каталог обуви
+            {% endif %}
+        {% endif %}
+    {% endif %} &mdash;
+{% endblock %}
+
 {% block center_col %}
     {% block_catalog_submenu 'index' request.path '' %}
-
+    
     {% include 'products/products_list.html' %}
-
 {% endblock %}
 
 {% block search_class %}{% endblock %}
