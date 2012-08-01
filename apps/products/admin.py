@@ -41,7 +41,7 @@ class SizeAdmin(admin.ModelAdmin):
 
 admin.site.register(Size, SizeAdmin)
 
-class ProductImageInline(admin.TabularInline):
+class ProductImageInline(AdminImageMixin, admin.TabularInline):
     model = ProductImage
 
 #--Виджеты jquery Редактора
