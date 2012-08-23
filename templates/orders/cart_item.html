@@ -36,7 +36,7 @@
             <h3>Изменить количество</h3>
             <input type="hidden" class="initial_count" value="{{ cart_item.count }}">
             <input type="hidden" class="cart_qty_item_id" value="{{ cart_item.id }}">
-            <p><span class="cart_qty_price"><span>{{ cart_item.product.get_str_price }}</span> руб.</span> × <input class="cart_qty_modal_text" type="text" value="{{ cart_item.count }}"/> = <span class="cart_qty_total_price"><span>{{ cart_item.get_str_total }}</span> руб.</span></p>
+            <p><span class="cart_qty_price"><span>{{ cart_item.product.price|floatformat:0 }}</span> руб.</span> × <input class="cart_qty_modal_text" type="text" value="{{ cart_item.count }}"/> = <span class="cart_qty_total_price"><span>{{ cart_item.get_str_total }}</span> руб.</span></p>
             <div><input class="cart_qty_modal_ok" type="button" value="Сохранить" /> <input class="cart_qty_modal_cancel" type="button" value="Отменить" /></div>
         </div>
 
