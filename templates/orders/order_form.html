@@ -12,7 +12,7 @@
 
 {% block center_col %}
     {% block_top_h 'Оформление заказа' %}
-    {{ order_form.errors }}
+    {% comment %}{{ order_form.errors }}{% endcomment %}
     <form class="order_form" method="post" action="/order_form_step2/">
         <div style="display: none;">{{ order_form.profile }}
             {{ order_form.profile.errors }}
