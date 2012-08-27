@@ -177,7 +177,7 @@ class ShowCabinetView(TemplateView):
                 next_id_loaded_items = splited_result[1]
 
                 context['loaded_count'] = remaining_count
-                context['orders'] = profile.get_orders()[:loaded_count]
+                context['orders'] = queryset[:loaded_count]
                 context['next_id_loaded_items'] = next_id_loaded_items
         return context
 

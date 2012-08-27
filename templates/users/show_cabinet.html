@@ -28,8 +28,9 @@
         <input type="hidden" id="loaded_ids" autocomplete="off" value="{{ next_id_loaded_items }}">
         <input type="hidden" id="a_name" autocomplete="off" value="orders">
         <input type="hidden" id="m_name" autocomplete="off" value="Order">
-
-        <h2>История ваших заказов:</h2>
+        {% if orders %}
+            <h2>История ваших заказов:</h2>
+        {% endif %}
 
         {% for order in orders %}
             <div class="history_order">

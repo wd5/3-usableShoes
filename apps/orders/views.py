@@ -137,6 +137,9 @@ class OrderFromView(FormView):
                 )
 
             if profile:
+                profile.name = new_order.first_name
+                profile.last_name = new_order.last_name
+                profile.phone = new_order.phone
                 profile.city = new_order.city
                 profile.address = new_order.address
                 profile.index = new_order.index
