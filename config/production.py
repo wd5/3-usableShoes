@@ -14,5 +14,5 @@ DATABASES = {
     }
 }
 EMAIL_PORT = 25
-#TIME_ZONE = 'Europe/Moscow'
-TIME_ZONE = 'Asia/Yakutsk'
+TIME_ZONE = 'Europe/Moscow'
+#TIME_ZONE = 'Asia/Yakutsk'
