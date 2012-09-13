@@ -110,7 +110,8 @@ trade_choices = (
 )
 
 class Product(models.Model):
-    category = models.ForeignKey(Category, verbose_name=u'Категория',)
+    #category = models.ForeignKey(Category, verbose_name=u'Категория',)
+    category = models.ManyToManyField(Category, verbose_name=u'Категория',)
     title = models.CharField(verbose_name=u'название', max_length=400)
     size = models.ManyToManyField(Size, verbose_name=u'размер')
     art = models.CharField(verbose_name=u'артикул', max_length=50, blank=True)
@@ -138,7 +139,11 @@ class Product(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('show_product',kwargs={'pk': '%s'%self.id,'slug':'%s'%self.category.slug,'s_type':'%s'%self.s_type})
+        for item in self.get_categories():
+            return reverse('show_product',kwargs={'pk': '%s'%self.id,'slug':'%s'%item.slug,'s_type':'%s'%self.s_type})
+
+    def get_short_url(self):
+        return u'%s/%s/'% (self.s_type, self.id)
 
     def get_str_price(self):
         return str_price(self.price)
@@ -148,6 +153,9 @@ class Product(models.Model):
 
     def get_sizes(self):
         return self.size.all()
+
+    def get_categories(self):
+        return self.category.published()
 
     def get_photos(self):
         return self.productimage_set.all()

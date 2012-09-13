@@ -9,9 +9,11 @@
 {% block class_div_h_hg %}bg2{% endblock %}
 
 {% block center_col %}
-    {% block_top_h product.category.title %}
+    {% if category %}
+        {% block_top_h category.title %}
+    {% endif %}
 
-    {% block_catalog_submenu 'product' request.path product %}
+    {% block_catalog_submenu 'product' request.path product category %}
 
     <div class="item_page parent_blk">
         <div class="item_l col">

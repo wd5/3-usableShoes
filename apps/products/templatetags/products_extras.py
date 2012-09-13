@@ -15,7 +15,7 @@ def block_catalog_menu(url):
     return {'menu': menu, 'current': current}
 
 @register.inclusion_tag("products/block_catalog_submenu.html")
-def block_catalog_submenu(type, url, object):
+def block_catalog_submenu(type, url, object, categ):
     try:
         design_collection = Category.objects.get(pk=11)
         dc_current =  url_spliter(url,3)
@@ -34,8 +34,10 @@ def block_catalog_submenu(type, url, object):
 
     if type=='product':
         product = object
+        prod_cat = categ
     else:
         product = False
+        prod_cat = False
 
-    return {'sizes': sizes, 'current': current, 'dc_current': dc_current,
+    return {'sizes': sizes, 'current': current, 'dc_current': dc_current,'prod_cat':prod_cat,
             'dc':design_collection, 'type':type, 'product':product, 'category':category }

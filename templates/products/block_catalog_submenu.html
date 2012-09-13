@@ -32,9 +32,9 @@
 
     {% if type == 'product' %}
         <ul>
-            <li {% if product.s_type == 'female' %}class="curr"{% endif %}><a href="{% url show_category_by_type product.category.slug 'female' %}">Женская</a></li>
-            <li {% if product.s_type == 'male' %}class="curr"{% endif %}><a href="{% url show_category_by_type product.category.slug 'male' %}">Мужская</a></li>
-            <li {% if product.s_type == 'child' %}class="curr"{% endif %}><a href="{% url show_category_by_type product.category.slug 'child' %}">Детская</a></li>
+            <li {% if product.s_type == 'female' %}class="curr"{% endif %}><a href="{% url show_category_by_type prod_cat.slug 'female' %}">Женская</a></li>
+            <li {% if product.s_type == 'male' %}class="curr"{% endif %}><a href="{% url show_category_by_type prod_cat.slug 'male' %}">Мужская</a></li>
+            <li {% if product.s_type == 'child' %}class="curr"{% endif %}><a href="{% url show_category_by_type prod_cat.slug 'child' %}">Детская</a></li>
         </ul>
     {% endif %}
 

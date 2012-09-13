@@ -305,7 +305,7 @@ class AddProdictToCartView(View):
                             else:
                                 return HttpResponseBadRequest()
                     else:
-                        cart = Cart.objects.create(profile=profile_id)
+                        cart = Cart.objects.create(profile=profile)
                 response.set_cookie('shoes_cart_id', cart.id, 1209600)
                 #if cookies_cart_id: response.delete_cookie('shoes_cart_id')
             elif cookies_cart_id:

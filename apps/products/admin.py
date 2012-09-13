@@ -54,12 +54,12 @@ class ProductAdminForm(forms.ModelForm):
 
 #--Виджеты jquery Редактора
 class ProductAdmin(AdminImageMixin, admin.ModelAdmin):
-    list_display = ('id','title','art','category','price', 'order','is_published',)
+    list_display = ('id','title','art','price', 'order','is_published',)
     list_display_links = ('id','title','art',)
     list_editable = ('order','is_published',)
     list_filter = ('is_published','category','size',)
     search_fields = ('title', 'description', 'art','material',)
-    filter_horizontal = ('size','related_products',)
+    filter_horizontal = ('size','related_products','category')
     inlines = [ProductImageInline]
     form = ProductAdminForm
 

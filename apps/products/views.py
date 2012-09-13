@@ -68,6 +68,11 @@ class ShowProduct(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(ShowProduct, self).get_context_data()
+        cat_slug = self.kwargs.get('slug', None)
+        try:
+            context['category'] = self.object.category.get(slug=cat_slug)
+        except:
+            context['category'] = False
         context['attached_photos'] = self.object.get_photos()
         return context
 
