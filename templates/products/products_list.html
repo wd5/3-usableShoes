@@ -6,13 +6,14 @@
         {% for item in catalog %}
             <div class="item">
                 <div class="item_in parent_blk">
-                    <div class="item_img"><a href="/catalog/category/{{ category.slug }}/{{ item.get_short_url }}" class="product_img">
+                    <div class="item_img"><a
+                            href="{% if category %}/catalog/category/{{ category.slug }}/{{ item.get_short_url }}{% else %}{{ item.get_absolute_url }}{% endif %}" class="product_img">
                         {% thumbnail item.image "120x120" crop="center" as im %}
                             <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="" />
                         {% endthumbnail %}
                     </a></div>
                     <div class="item_price">{{ item.get_str_price }} <span>руб.</span></div>
-                    <h3 class="item_name"><a href="/catalog/category/{{ category.slug }}/{{ item.get_short_url }}">{{ item.title }}</a></h3>
+                    <h3 class="item_name"><a href="{% if category %}/catalog/category/{{ category.slug }}/{{ item.get_short_url }}{% else %}{{ item.get_absolute_url }}{% endif %}">{{ item.title }}</a></h3>
                     {% if item.art %}<div class="item_art">«{{ item.art }}»</div>{% endif %}
                     <input class="item_tocart" type="button" name="{{ item.id }}" value="" />
                 </div>
