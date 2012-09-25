@@ -6,8 +6,8 @@
     {% endif %}
 
     <div class="cart_img">
-        {% thumbnail cart_item.product.image "120x120" crop="center" as im %}
-            <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="" />
+        {% thumbnail cart_item.product.image "120x120" as im %}
+            <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" style="margin:{{ im|margin:"120x120" }}" alt="" />
         {% endthumbnail %}
     </div>
     <div class="cart_des">

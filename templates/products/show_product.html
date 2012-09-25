@@ -20,8 +20,8 @@
             <div class="item_imgs">
                 <div class="item_img_zl">
                     {% thumbnail product.image "1000" upscale=0 as big %}
-                    {% thumbnail product.image "300x300" crop="center" as im %}
-                        <a href="{{ big.url }}" class="product_img fancybox" rel="{{ product.id }}"><img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="" /></a>
+                    {% thumbnail product.image "300x300" as im %}
+                        <a href="{{ big.url }}" class="product_img fancybox" rel="{{ product.id }}"><img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" style="margin:{{ im|margin:"300x300" }}" alt="" /></a>
                     {% endthumbnail %}
                     {% endthumbnail %}
                 </div>
@@ -30,12 +30,12 @@
                     <ul class="item_imgs_menu">
                         <li class="curr">
                             {% thumbnail product.image "50x50" crop="center" as im %}
-                                <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="" />
+                                <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" style="margin:{{ im|margin:"50x50" }}" alt="" />
                             {% endthumbnail %}
                         <div style="display: none;" class="replace_img">
                             {% thumbnail product.image "1000" upscale=0 as big %}
-                            {% thumbnail product.image "300x300" crop="center" as im %}
-                                <a href="{{ big.url }}" class="product_img fancybox"><img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="" /></a>
+                            {% thumbnail product.image "300x300" as im %}
+                                <a href="{{ big.url }}" class="product_img fancybox"><img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" style="margin:{{ im|margin:"300x300" }}" alt="" /></a>
                             {% endthumbnail %}
                             {% endthumbnail %}
                         </div>
@@ -44,12 +44,12 @@
                         {% for photo in attached_photos %}
                             <li>
                                 {% thumbnail photo.image "50x50" crop="center" as im %}
-                                    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="" />
+                                    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" style="margin:{{ im|margin:"50x50" }}" alt="" />
                                 {% endthumbnail %}
                                 <div style="display: none;" class="replace_img">
                                     {% thumbnail photo.image "1000" upscale=0 as big %}
-                                    {% thumbnail photo.image "300x300" crop="center" as im %}
-                                        <a href="{{ big.url }}" class="product_img fancybox" rel="{{ product.id }}"><img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="" /></a>
+                                    {% thumbnail photo.image "300x300" as im %}
+                                        <a href="{{ big.url }}" class="product_img fancybox" rel="{{ product.id }}"><img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" style="margin:{{ im|margin:"300x300" }}" alt="" /></a>
                                     {% endthumbnail %}
                                     {% endthumbnail %}
                                 </div>

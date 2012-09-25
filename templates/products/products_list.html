@@ -8,8 +8,8 @@
                 <div class="item_in parent_blk">
                     <div class="item_img"><a
                             href="{% if category %}/catalog/category/{{ category.slug }}/{{ item.get_short_url }}{% else %}{{ item.get_absolute_url }}{% endif %}" class="product_img">
-                        {% thumbnail item.image "120x120" crop="center" as im %}
-                            <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="" />
+                        {% thumbnail item.image "120x120" as im %}
+                            <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" style="margin:{{ im|margin:"120x120" }}" alt="" />
                         {% endthumbnail %}
                     </a></div>
                     <div class="item_price">{{ item.get_str_price }} <span>руб.</span></div>
@@ -36,8 +36,8 @@
             <div class="item">
                 <div class="item_in parent_blk">
                     <div class="item_img"><a href="{{ related_product.get_absolute_url }}" class="product_img">
-                        {% thumbnail related_product.image "120x120" crop="center" as im %}
-                        <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="" />
+                        {% thumbnail related_product.image "120x120" as im %}
+                        <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" style="margin:{{ im|margin:"120x120" }}" alt="" />
                         {% endthumbnail %}
                     </a></div>
                     <div class="item_price">{{ related_product.get_str_price }} <span>руб.</span></div>
