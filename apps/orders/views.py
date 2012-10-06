@@ -73,9 +73,9 @@ class OrderFromView(FormView):
 
     def post(self, request, *args, **kwargs):
         try:
-            page_moscow = Page.objects.get(id=12)
+            carting_price_moscow = Settings.objects.get(name='moscow_carting_price')
         except:
-            page_moscow = False
+            carting_price_moscow = False
         try:
             page_selfcarting = Page.objects.get(id=13)
         except:
@@ -178,7 +178,7 @@ class OrderFromView(FormView):
         else:
             return render_to_response(self.template_name,
                     {'order_form': order_form, 'request': request, 'user': request.user,
-                     'page_selfcarting': page_selfcarting, 'page_moscow': page_moscow, })
+                     'page_selfcarting': page_selfcarting, 'carting_price_moscow': carting_price_moscow, })
 
     def get(self, request, *args, **kwargs):
         form_class = self.get_form_class()
@@ -215,9 +215,9 @@ class OrderFromView(FormView):
     def get_context_data(self, **kwargs):
         context = super(OrderFromView, self).get_context_data()
         try:
-            context['page_moscow'] = Page.objects.get(id=12)
+            context['carting_price_moscow'] = Settings.objects.get(name='moscow_carting_price')
         except:
-            context['page_moscow'] = False
+            context['carting_price_moscow'] = False
         try:
             context['page_selfcarting'] = Page.objects.get(id=13)
         except:

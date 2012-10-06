@@ -31,8 +31,8 @@
     {% endif %}
 
     {% if product %}
-        <h2>Похожие товары</h2>
-        {% for related_product in product.get_related_products %}
+        <h2>Похожие товары{{ ids }}</h2>
+        {% for related_product in product_related_products %}
             <div class="item">
                 <div class="item_in parent_blk">
                     <div class="item_img"><a href="{{ related_product.get_absolute_url }}" class="product_img">

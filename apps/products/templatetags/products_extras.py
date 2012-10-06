@@ -16,12 +16,12 @@ def block_catalog_menu(url):
 
 @register.inclusion_tag("products/block_catalog_submenu.html")
 def block_catalog_submenu(type, url, object, categ):
-    try:
-        design_collection = Category.objects.get(pk=11)
-        dc_current =  url_spliter(url,3)
-    except Page.DoesNotExist:
-        dc_current = False
-        design_collection = False
+#    try:
+#        design_collection = Category.objects.get(pk=11)
+#        dc_current =  url_spliter(url,3)
+#    except Page.DoesNotExist:
+#        dc_current = False
+#        design_collection = False
 
     current = url_spliter(url,False)
 
@@ -39,5 +39,7 @@ def block_catalog_submenu(type, url, object, categ):
         product = False
         prod_cat = False
 
-    return {'sizes': sizes, 'current': current, 'dc_current': dc_current,'prod_cat':prod_cat,
-            'dc':design_collection, 'type':type, 'product':product, 'category':category }
+    return {'sizes': sizes, 'current': current, 'prod_cat':prod_cat,
+#            'dc_current': dc_current,
+#            'dc':design_collection,
+            'type':type, 'product':product, 'category':category }

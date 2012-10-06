@@ -39,6 +39,9 @@ class ShowCategory(DetailView):
     def get_context_data(self, **kwargs):
         context = super(ShowCategory, self).get_context_data()
         products = self.object.get_products()
+        if products.filter(s_type='female'): setattr(self.object, 'female', True)
+        if products.filter(s_type='male'): setattr(self.object, 'male', True)
+        if products.filter(s_type='child'): setattr(self.object, 'child', True)
         s_type = self.kwargs.get('s_type', None)
         if s_type == 'all':
             pass
@@ -52,10 +55,11 @@ class ShowCategory(DetailView):
                 if size.id in sizes_ids:
                     pass
                 else:
-                    sizes.append({'id': size.id, 'value': size.value, })
+                    sizes.append({'id': size.id, 'value': size.value,})
                     sizes_ids.append(size.id)
                     #sizes = list(set(sizes))
-        sizes.sort()
+        #sizes.sort()
+        sizes = sorted(sizes, key=lambda k: k['value'])
         setattr(self.object, 'sizes', sizes)
         return context
 
@@ -70,10 +74,33 @@ class ShowProduct(DetailView):
         context = super(ShowProduct, self).get_context_data()
         cat_slug = self.kwargs.get('slug', None)
         try:
-            context['category'] = self.object.category.get(slug=cat_slug)
+            category = self.object.category.get(slug=cat_slug)
         except:
-            context['category'] = False
+            category = False
+        context['category'] = category
         context['attached_photos'] = self.object.get_photos()
+        product_price = self.object.price
+        great_pp = product_price + 100
+        less_pp = product_price - 100
+        # похожие товары
+        related_products_list = []
+        related_products = self.object.get_related_products()
+        if related_products:
+            rp_count = related_products.count()
+            if rp_count<4:
+                remaining_count = 4 - rp_count
+                for item in related_products:
+                    related_products_list.append(item)
+                related_products_next_part = Product.objects.filter(is_published=True, category=category, price__gte=less_pp, price__lte=great_pp).exclude(id__in=related_products.values("id")).order_by('?')[:remaining_count]
+                for item in related_products_next_part:
+                    related_products_list.append(item)
+                related_products = related_products_list
+            else:
+                pass
+        else:
+            if category:
+                related_products = Product.objects.filter(is_published=True, category=category, price__gte=less_pp, price__lte=great_pp).exclude(id=self.object.id).order_by('?')[:4]
+        context['product_related_products'] = related_products
         return context
 
 show_product = ShowProduct.as_view()

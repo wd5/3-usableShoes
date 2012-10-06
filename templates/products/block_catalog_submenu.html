@@ -1,8 +1,8 @@
 <div class="catalog_submenu">
 
-    {% if dc %}
+{% comment %}    {% if dc %}
         <div class="design_lnk"><a {% if dc_current == dc.get_absolute_url %}class="curr"{% endif %} href="{{ dc.get_absolute_url }}">{{ dc.title }}</a></div>
-    {% endif %}
+    {% endif %}{% endcomment %}
 
     {% if type == 'index' %}
         <ul>
@@ -13,12 +13,19 @@
     {% endif %}
 
     {% if type == 'categ' %}
+
         <input type="hidden" id="categ_id" value="{{ category.id }}">
         <ul class="ul_s_types">
             <li {% if current == category.get_absolute_url|add:'all/' or current == category.get_absolute_url %}class="curr"{% endif %}><a name='all' href="{% url show_category_by_type category.slug 'all' %}">Вся обувь</a></li>
-            <li {% if current == category.get_absolute_url|add:'female/' %}class="curr"{% endif %}><a name='female' href="{% url show_category_by_type category.slug 'female' %}">Женская</a></li>
-            <li {% if current == category.get_absolute_url|add:'male/' %}class="curr"{% endif %}><a name='male' href="{% url show_category_by_type category.slug 'male' %}">Мужская</a></li>
-            <li {% if current == category.get_absolute_url|add:'child/' %}class="curr"{% endif %}><a name='child' href="{% url show_category_by_type category.slug 'child' %}">Детская</a></li>
+            {% if category.female %}
+                <li {% if current == category.get_absolute_url|add:'female/' %}class="curr"{% endif %}><a name='female' href="{% url show_category_by_type category.slug 'female' %}">Женская</a></li>
+            {% endif %}
+            {% if category.male %}
+                <li {% if current == category.get_absolute_url|add:'male/' %}class="curr"{% endif %}><a name='male' href="{% url show_category_by_type category.slug 'male' %}">Мужская</a></li>
+            {% endif %}
+            {% if category.child %}
+                <li {% if current == category.get_absolute_url|add:'child/' %}class="curr"{% endif %}><a name='child' href="{% url show_category_by_type category.slug 'child' %}">Детская</a></li>
+            {% endif %}
         </ul>
         <ul class="ul_sizes">
             {% if sizes|length != 1 %}

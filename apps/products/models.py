@@ -92,7 +92,7 @@ class Size(models.Model):
     class Meta:
         verbose_name =_(u'size')
         verbose_name_plural =_(u'sizes')
-        ordering = ['value',]
+        ordering = ['-value',]
 
 def file_path_Product(instance, filename):
     return os.path.join('images','products',  translify(filename).replace(' ', '_') )
@@ -136,7 +136,7 @@ class Product(models.Model):
         ordering = ['-order',]
 
     def __unicode__(self):
-        return self.title
+        return u'%s. Артикул: %s' % (self.title,self.art)
 
     def get_absolute_url(self):
         for item in self.get_categories():

@@ -62,7 +62,10 @@
         </ul>
 
         <div class="contact_info moscow" {% if order_form.order_carting.value != 'moscow' %}style="display: none;"{% endif %}>
-            {{ page_moscow.content|safe }}</div>
+            <div class="input1 ems_div" style="display: none;background: #FEEF20;padding: 6px 12px 6px 12px; margin: 10 12px 0 0; width:auto;">
+                Доставка: {{ carting_price_moscow.value }} руб.
+            </div>
+        </div>
 
         <div class="contact_info selfcarting" {% if order_form.order_carting.value != 'selfcarting' %}style="display: none;"{% endif %}>{{ page_selfcarting.content|safe }}</div>
 
