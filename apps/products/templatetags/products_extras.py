@@ -35,6 +35,7 @@ def block_catalog_submenu(type, url, object, categ):
     if type=='product':
         product = object
         prod_cat = categ
+        category = categ
     else:
         product = False
         prod_cat = False

@@ -75,6 +75,10 @@ class ShowProduct(DetailView):
         cat_slug = self.kwargs.get('slug', None)
         try:
             category = self.object.category.get(slug=cat_slug)
+            cat_products = category.get_products()
+            if cat_products.filter(s_type='female'): setattr(category, 'female', True)
+            if cat_products.filter(s_type='male'): setattr(category, 'male', True)
+            if cat_products.filter(s_type='child'): setattr(category, 'child', True)
         except:
             category = False
         context['category'] = category
