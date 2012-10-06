@@ -60,6 +60,8 @@ urlpatterns = patterns('',
     (r'^change_cart_product_count/$','apps.orders.views.change_cart_product_count'),
     (r'^show_order_form/$','apps.orders.views.show_order_form'),
     (r'^order_form_step2/$','apps.orders.views.show_finish_form'),
+
+    (r'^ems_calculate/$','apps.orders.views.ems_calculate'),
 )
 
 

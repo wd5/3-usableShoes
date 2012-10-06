@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import datetime
+import datetime, urllib, json, settings
 from django.core.mail.message import EmailMessage
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
 from django.shortcuts import render_to_response
@@ -16,7 +16,6 @@ from apps.siteblocks.models import Settings
 from django.core.urlresolvers import reverse
 from apps.orders.forms import RegistrationOrderForm
 from pytils.numeral import choose_plural
-import settings
 
 class ViewCart(TemplateView):
     template_name = 'orders/cart_detail.html'
@@ -188,9 +187,10 @@ class OrderFromView(FormView):
         context['order_form'] = form
 
         if self.request.user.is_authenticated and self.request.user.id:
+            profile_id = self.request.user.profile.id
             try:
                 profile_set = Profile.objects.filter(id=self.request.user.profile.id)
-                profile = Profile.objects.get(id=self.request.user.profile.id)
+                profile = Profile.objects.get(pk=int(profile_id))
                 context['order_form'].fields['profile'].queryset = profile_set
                 context['order_form'].fields['profile'].initial = profile
                 context['order_form'].fields['first_name'].initial = profile.name
@@ -535,3 +535,52 @@ class AddSameProductView(View):
             return HttpResponse(cart_product_html)
 
 add_same_product_to_cart = csrf_exempt(AddSameProductView.as_view())
+
+class EmsCalculateView(View):
+    def post(self, request, *args, **kwargs):
+        if not request.is_ajax():
+            return HttpResponseRedirect('/')
+        else:
+            if 'city' not in request.POST:
+                return HttpResponseBadRequest()
+
+            city = request.POST['city']
+
+            cookies = request.COOKIES
+            cookies_cart_id = False
+            if 'shoes_cart_id' in cookies:
+                cookies_cart_id = cookies['shoes_cart_id']
+
+            if self.request.user.is_authenticated and self.request.user.id:
+                profile_id = self.request.user.profile.id
+            else:
+                profile_id = False
+
+            sessionid = self.request.session.session_key
+
+            try:
+                if profile_id:
+                    cart = Cart.objects.get(profile=profile_id)
+                elif cookies_cart_id:
+                    cart = Cart.objects.get(id=cookies_cart_id)
+                else:
+                    cart = Cart.objects.get(sessionid=sessionid)
+            except Cart.DoesNotExist:
+                cart = False
+
+            if cart:
+                data = urllib.urlopen('http://emspost.ru/api/rest/?method=ems.get.locations&type=cities&plain=true')
+                json_cities = json.load(data)
+                cities_is_in = [item for item in json_cities["rsp"]["locations"]
+                            if item["name"].lower() == city.lower()]
+                if cities_is_in:
+                    city_code = cities_is_in[0]['value'] # из москвы!
+                    carting_price_data = urllib.urlopen('http://emspost.ru/api/rest?method=ems.calculate&from=city--moskva&to=%s&weight=%s' % (city_code, cart.get_products_count()))
+                    json_data = json.load(carting_price_data)
+                    return HttpResponse(json_data["rsp"]["price"])
+                else: # не нашли город
+                    return HttpResponse('NotFound')
+            else:
+                return HttpResponseBadRequest()
+
+ems_calculate = csrf_exempt(EmsCalculateView.as_view())

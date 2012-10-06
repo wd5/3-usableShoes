@@ -462,4 +462,37 @@ $(function(){
         return false;
     });
 
+    $('.order_form input[name="city"]').live('change', function(){
+        EmsPrice($(this).val());
+    });
+
 });
+
+// вычисления по EMS
+function EmsPrice(city){
+    $.ajax({
+        url: "/ems_calculate/",
+        data: {
+            city: city
+        },
+        type: "POST",
+        beforeSend: function ( xhr ) {
+            if ($('.ems_div').is(':hidden')) {
+            } else {
+                $('.ems_price').html('<img src="/media/img/ajax-loader.gif">');
+            }
+        },
+        success: function(data)
+        {
+            if (data=="NotFound"){
+                $('.ems_div').hide();
+            } else {
+                $('.ems_div').show();
+                $('.ems_price').html(data);
+            }
+        },
+        error:function(jqXHR,textStatus,errorThrown){
+            $('.ems_div').hide();
+        }
+    });
+}

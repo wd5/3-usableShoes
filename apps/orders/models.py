@@ -25,7 +25,11 @@ class Cart(models.Model):
         return CartProduct.objects.select_related().filter(cart=self)
 
     def get_products_count(self):
-        return self.get_products().count()
+        count = 0
+        for item in self.get_products():
+            count += item.count
+        return count
+        #return self.get_products().count()
 
     def get_total(self):
         sum = 0
@@ -168,7 +172,7 @@ class Order(models.Model):
     def get_str_total(self):
         total = self.get_total()
         value = u'%s' % total
-        if total._isinteger():
+        if isinstance(total,int):
             value = u'%s' % value[:len(value) - 3]
             count = 3
         else:

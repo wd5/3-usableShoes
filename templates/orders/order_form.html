@@ -6,6 +6,9 @@
     Оформление заказа &mdash;
 {% endblock %}
 
+{% block extend_js %}
+{% endblock %}
+
 {% block banner %}{% endblock %}
 
 {% block center_class %} center_wide{% endblock %}
@@ -82,6 +85,9 @@
                 {{ order_form.address.errors }}
                 {{ order_form.non_field_errors  }}
             </div>
+            <div class="input1 ems_div" style="display: none;background: #FEEF20;padding: 6px 12px 6px 12px; margin: 10 12px 0 0; width:auto;">
+                Доставка: <span class="ems_price"></span> руб.
+            </div>
             <div class="textarea textarea1">
                 <label>Примечание <span class="label_note">Номер домофона или&nbsp;любая другая информация</span></label>
                 {{ order_form.note }}
@@ -95,6 +101,11 @@
 {% endblock %}
 
 {% block right_col %}
+    <script type="text/javascript">
+        if ($("#id_city").val()!=undefined){
+            EmsPrice($("#id_city").val());
+        }
+    </script>
 {% endblock %}
 
 {% comment %}
