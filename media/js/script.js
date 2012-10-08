@@ -25,7 +25,26 @@ $(function(){
         $(this).parent().find('li').removeClass('curr');
         $(this).toggleClass('curr');
 
-        $('#id_order_carting [value="'+curr_class+'"]').attr('selected','selected')
+        $('#id_order_carting [value="'+curr_class+'"]').attr('selected','selected');
+
+        var block_country = $('div.country');
+        var block_moscow = $('div.moscow');
+
+        if (curr_class=='moscow') {
+            $('#id_address').val('');
+            $('#id_city').val('Москва');
+            $('.input_note').val('');
+            block_moscow.prepend(block_country.find('.input_address'));
+            block_moscow.append(block_country.find('.input_note'));
+        }
+
+        if (curr_class=='country') {
+            $('#id_address').val('');
+            $('#id_city').val('');
+            $('.input_note').val('');
+            $('.input_index').after(block_moscow.find('.input_address'));
+            block_country.append(block_moscow.find('.input_note'));
+        }
 
 
         $('.contact_info').hide();
@@ -462,8 +481,20 @@ $(function(){
         return false;
     });
 
-    $('.order_form input[name="city"]').live('change', function(){
-        EmsPrice($(this).val());
+    function log( message ) {
+        $( "<div/>" ).text( message ).prependTo( "#log" );
+        $( "#log" ).scrollTop( 0 );
+    }
+
+    $('#id_city').autocomplete({
+        source: "/search_ems_city/",
+        minLength: 2,
+        select: function( event, ui ) {
+            log( ui.item ?
+                "Selected: " + ui.item.value + " aka " + ui.item.id :
+                "Nothing selected, input was " + this.value );
+            EmsPrice(ui.item.value);
+        }
     });
 
 });

@@ -62,6 +62,7 @@ urlpatterns = patterns('',
     (r'^order_form_step2/$','apps.orders.views.show_finish_form'),
 
     (r'^ems_calculate/$','apps.orders.views.ems_calculate'),
+    (r'^search_ems_city/$','apps.orders.views.search_ems_city'),
 )
 
 

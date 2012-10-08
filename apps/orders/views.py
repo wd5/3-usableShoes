@@ -6,7 +6,7 @@ from django.shortcuts import render_to_response
 from django.template.loader import render_to_string
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.views.generic import FormView, DetailView, TemplateView, View
-from apps.orders.models import Cart, CartProduct, Order, OrderProduct
+from apps.orders.models import Cart, CartProduct, Order, OrderProduct, EmsCity
 from apps.orders.forms import RegistrationOrderForm
 from apps.products.models import Product, Size
 from apps.users.models import Profile
@@ -541,6 +541,13 @@ class EmsCalculateView(View):
         if not request.is_ajax():
             return HttpResponseRedirect('/')
         else:
+#            data = urllib.urlopen('http://emspost.ru/api/rest/?method=ems.get.locations&type=cities&plain=true')
+#            json_cities = json.load(data)
+#            for item in json_cities["rsp"]["locations"]:
+#                record = EmsCity(value=item["value"], name=item["name"])
+#                record.save()
+#            return HttpResponseBadRequest()
+
             if 'city' not in request.POST:
                 return HttpResponseBadRequest()
 
@@ -569,13 +576,15 @@ class EmsCalculateView(View):
                 cart = False
 
             if cart:
-                data = urllib.urlopen('http://emspost.ru/api/rest/?method=ems.get.locations&type=cities&plain=true')
-                json_cities = json.load(data)
-                cities_is_in = [item for item in json_cities["rsp"]["locations"]
-                            if item["name"].lower() == city.lower()]
-                if cities_is_in:
-                    city_code = cities_is_in[0]['value'] # из москвы!
-                    carting_price_data = urllib.urlopen('http://emspost.ru/api/rest?method=ems.calculate&from=city--moskva&to=%s&weight=%s' % (city_code, cart.get_products_count()))
+                try:
+                    ems_city = EmsCity.objects.get(name__iexact=city)
+                except:
+                    ems_city = False
+                if ems_city:
+                    city_code = ems_city.value # из москвы!
+                    carting_price_data = urllib.urlopen(
+                        'http://emspost.ru/api/rest?method=ems.calculate&from=city--moskva&to=%s&weight=%s' % (
+                            city_code, cart.get_products_count()))
                     json_data = json.load(carting_price_data)
                     return HttpResponse(json_data["rsp"]["price"])
                 else: # не нашли город
@@ -584,3 +593,24 @@ class EmsCalculateView(View):
                 return HttpResponseBadRequest()
 
 ems_calculate = csrf_exempt(EmsCalculateView.as_view())
+
+class EmsSearch(View):
+    def get(self, request, *args, **kwargs):
+        if not request.is_ajax():
+            return HttpResponseRedirect('/')
+        else:
+            if 'term' not in request.GET:
+                return HttpResponseBadRequest()
+
+            term = request.GET['term']
+
+            ems_cities = EmsCity.objects.filter(name__istartswith=term)
+            response_data = []
+            if ems_cities:
+                for city in ems_cities:
+                    response_data.append(city.name.title())
+                return HttpResponse(json.dumps(response_data), mimetype="application/json")
+            else: # не нашли город
+                return HttpResponse('NotFound')
+
+search_ems_city = csrf_exempt(EmsSearch.as_view())

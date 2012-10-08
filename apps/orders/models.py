@@ -232,3 +232,15 @@ class OrderProduct(models.Model):
         else:
             return value
 
+class EmsCity(models.Model):
+    value = models.CharField(max_length=100, verbose_name=u'Код')
+    name = models.CharField(max_length=100, verbose_name=u'Название')
+
+    def __unicode__(self):
+        return self.value
+
+    class Meta:
+        verbose_name = _(u'product_item')
+        verbose_name_plural = _(u'product_items')
+
+

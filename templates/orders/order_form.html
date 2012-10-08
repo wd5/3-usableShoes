@@ -62,7 +62,7 @@
         </ul>
 
         <div class="contact_info moscow" {% if order_form.order_carting.value != 'moscow' %}style="display: none;"{% endif %}>
-            <div class="input1 ems_div" style="display: none;background: #FEEF20;padding: 6px 12px 6px 12px; margin: 10 12px 0 0; width:auto;">
+            <div class="input1 ems_div" style="display: none;background: #f5f2bc;padding: 6px 12px 6px 12px; margin: 10 12px 0 0; width:auto;">
                 Доставка: {{ carting_price_moscow.value }} руб.
             </div>
         </div>
@@ -76,22 +76,22 @@
                 {{ order_form.city.errors }}
                 {{ order_form.non_field_errors  }}
             </div>
-            <div class="input input1">
+            <div class="input input1 input_index">
                 <label>Индекс <span class="label_note">Почтовый индекс</span></label>
                 {{ order_form.index }}
                 {{ order_form.index.errors }}
                 {{ order_form.non_field_errors  }}
             </div>
-            <div class="input input2">
+            <div class="input input2 input_address">
                 <label>Адрес <span class="label_note">Улица, дом, квартира</span></label>
                 {{ order_form.address }}
                 {{ order_form.address.errors }}
                 {{ order_form.non_field_errors  }}
             </div>
-            <div class="input1 ems_div" style="display: none;background: #FEEF20;padding: 6px 12px 6px 12px; margin: 10 12px 0 0; width:auto;">
+            <div class="input1 ems_div" style="display: none;background: #f5f2bc;padding: 6px 12px 6px 12px; margin: 10 12px 0 0; width:auto;">
                 Доставка: <span class="ems_price"></span> руб.
             </div>
-            <div class="textarea textarea1">
+            <div class="textarea textarea1 input_note">
                 <label>Примечание <span class="label_note">Номер домофона или&nbsp;любая другая информация</span></label>
                 {{ order_form.note }}
                 {{ order_form.note.errors }}
