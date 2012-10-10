@@ -62,7 +62,7 @@
         </ul>
 
         <div class="contact_info moscow" {% if order_form.order_carting.value != 'moscow' %}style="display: none;"{% endif %}>
-            <div class="input1 ems_div" style="display: none;background: #f5f2bc;padding: 6px 12px 6px 12px; margin: 10 12px 0 0; width:auto;">
+            <div class="input1 ems_div" style="background: #f5f2bc;padding: 6px 12px 6px 12px; margin: -10px 0px 25px 160px; width:auto;">
                 Доставка: {{ carting_price_moscow.value }} руб.
             </div>
         </div>
@@ -88,7 +88,7 @@
                 {{ order_form.address.errors }}
                 {{ order_form.non_field_errors  }}
             </div>
-            <div class="input1 ems_div" style="display: none;background: #f5f2bc;padding: 6px 12px 6px 12px; margin: 10 12px 0 0; width:auto;">
+            <div class="input1 ems_div" style="display: none;background: #f5f2bc;padding: 6px 12px 6px 12px; margin: -10px 0px 25px 160px; width:auto;">
                 Доставка: <span class="ems_price"></span> руб.
             </div>
             <div class="textarea textarea1 input_note">
@@ -99,7 +99,7 @@
             </div>
         </div>
 
-        <div><input class="btn2 cart_submit" type="submit" name="" value="Отправить заказ" /></div>
+        <div><input class="btn2 cart_submit" type="submit" name="cart_submit" value="Отправить заказ" /></div>
     </form>
 {% endblock %}
 

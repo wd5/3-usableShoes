@@ -31,6 +31,7 @@ $(function(){
         var block_moscow = $('div.moscow');
 
         if (curr_class=='moscow') {
+            $('input[name="cart_submit"]').removeAttr('disabled');
             $('#id_address').val('');
             $('#id_city').val('Москва');
             $('.input_note').val('');
@@ -39,8 +40,10 @@ $(function(){
         }
 
         if (curr_class=='country') {
+
             $('#id_address').val('');
             $('#id_city').val('');
+            EmsPrice($('#id_city').val());
             $('.input_note').val('');
             $('.input_index').after(block_moscow.find('.input_address'));
             block_country.append(block_moscow.find('.input_note'));
@@ -488,12 +491,16 @@ $(function(){
 
     $('#id_city').autocomplete({
         source: "/search_ems_city/",
-        minLength: 2,
+        minLength: 1,
         select: function( event, ui ) {
             log( ui.item ?
                 "Selected: " + ui.item.value + " aka " + ui.item.id :
                 "Nothing selected, input was " + this.value );
             EmsPrice(ui.item.value);
+            $('#id_address').focus();
+        },
+        change: function( event, ui ) {
+            EmsPrice($(this).val());
         }
     });
 
@@ -508,22 +515,25 @@ function EmsPrice(city){
         },
         type: "POST",
         beforeSend: function ( xhr ) {
-            if ($('.ems_div').is(':hidden')) {
+            if ($('.country .ems_div').is(':hidden')) {
             } else {
-                $('.ems_price').html('<img src="/media/img/ajax-loader.gif">');
+                $('.country .ems_price').html('<img src="/media/img/ajax-loader.gif">');
             }
         },
         success: function(data)
         {
             if (data=="NotFound"){
-                $('.ems_div').hide();
+                $('.country .ems_div').html('Неверно выбран город').show();
+                $('input[name="cart_submit"]').attr('disabled', 'disabled');
             } else {
-                $('.ems_div').show();
-                $('.ems_price').html(data);
+                $('.country .ems_div').html('Доставка: <span class="ems_price"></span> руб.').show();
+                $('.country .ems_price').html(data);
+                $('input[name="cart_submit"]').removeAttr('disabled');
             }
         },
         error:function(jqXHR,textStatus,errorThrown){
-            $('.ems_div').hide();
+            $('.country .ems_div').hide();
+            $('input[name="cart_submit"]').attr('disabled', 'disabled');
         }
     });
 }

@@ -553,6 +553,9 @@ class EmsCalculateView(View):
 
             city = request.POST['city']
 
+            if city == '':
+                return HttpResponseBadRequest()
+
             cookies = request.COOKIES
             cookies_cart_id = False
             if 'shoes_cart_id' in cookies:
