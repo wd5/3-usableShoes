@@ -19,7 +19,11 @@
 {% endblock %}
 
 {% block center_col %}
-    {% block_catalog_submenu 'index' request.path '' '' %}
+    {% if request.path == '/' %}
+        {% block_slider %}
+    {% else %}
+        {% block_catalog_submenu 'index' request.path '' '' %}
+    {% endif %}
     
     {% include 'products/products_list.html' %}
 {% endblock %}

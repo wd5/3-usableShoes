@@ -1,0 +1,14 @@
+        {% if slider %}
+            <div class="carousel_out">
+                <div class="carousel">
+                    <ul id="carousel">
+                        {% for item in slider %}
+                            <li><a href="{{ item.get_absolute_url }}">
+                                <div class="carousel_img"><img src="{{ item.image.url }}" alt="" /></div>
+                                <div class="carousel_h">{{ item.title }}</div>
+                            </a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div><!--/carousel_out-->
+        {% endif %}

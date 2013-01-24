@@ -62,7 +62,6 @@ class CartProduct(models.Model):
     cart = models.ForeignKey(Cart, verbose_name=u'Корзина')
     count = models.PositiveIntegerField(default=1, verbose_name=u'Количество')
     product = models.ForeignKey(Product, verbose_name=u'Товар')
-    size = models.ForeignKey(Size, verbose_name=u'размер')
     is_deleted = models.BooleanField(verbose_name=u'удалён', default=False)
 
     class Meta:
@@ -71,7 +70,7 @@ class CartProduct(models.Model):
         verbose_name_plural = _(u'product_items')
 
     def get_total(self):
-        total = self.product.price * self.count
+        total = self.product.price * self.product.count * self.count
         return total
 
     def get_str_total(self):

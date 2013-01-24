@@ -13,21 +13,11 @@
     <div class="cart_des">
         <h3 class="item_name"><a href="{{ cart_item.product.get_absolute_url }}">{{ cart_item.product.title }}</a></h3>
             <div class="item_art">{% if cart_item.product.art %}«{{ cart_item.product.art }}»{% endif %}</div>
-
-        <div class="cart_size"><strong>Размер:</strong> <span class="size_blk">{{ cart_item.size.value }}</span>
-            {% if cart_item.product.get_sizes|length > 1 %}
-                <div class="item_sizes" style="display: none;">
-                    <ul>
-                        {% for size in cart_item.product.get_sizes %}
-                            <li {% if size.id == cart_item.size.id %}class="curr"{% endif %} ><a href="#" name="{{ size.id }}">{{ size.value }}</a></li>
-                        {% endfor %}
-                    </ul>
-                </div><a href="#" class="cart_size_lnk">изменить</a>
-            {% endif %}
-        </div>
-        {% if cart_item.product.get_sizes|length > 1 %}
-            <div class="cart_add_other" style="display: none;"><a href="#" rel="{{ cart_item.id }}"><span>такой же товар, но другого размера</span></a></div>
-        {% endif %}
+            <div class="item_note"><em>В коробке размеры от {{ cart_item.product.get_min }} до {{ cart_item.product.get_max }}</em></div>
+    </div>
+    <div class="cart_box col">
+        <div class="item_cart_price">{{ cart_item.product.get_str_price_for_box }} <span>руб.</span></div>
+        <div class="cart_box_qty">{{ cart_item.product.count }} шт.</div>
     </div>
     <div class="cart_qty">
         <div><input class="btn2 cart_qty_btn" type="button" value="{{ cart_item.count }}" /></div>
@@ -36,7 +26,7 @@
             <h3>Изменить количество</h3>
             <input type="hidden" class="initial_count" value="{{ cart_item.count }}">
             <input type="hidden" class="cart_qty_item_id" value="{{ cart_item.id }}">
-            <p><span class="cart_qty_price"><span>{{ cart_item.product.price|floatformat:0 }}</span> руб.</span> × <input class="cart_qty_modal_text" type="text" value="{{ cart_item.count }}"/> = <span class="cart_qty_total_price"><span>{{ cart_item.get_str_total }}</span> руб.</span></p>
+            <p><span class="cart_qty_price"><span>{{ cart_item.product.get_str_price_for_box }}</span> руб.</span> × <input class="cart_qty_modal_text" type="text" value="{{ cart_item.count }}"/> = <span class="cart_qty_total_price"><span>{{ cart_item.get_str_total }}</span> руб.</span></p>
             <div><input class="cart_qty_modal_ok" type="button" value="Сохранить" /> <input class="cart_qty_modal_cancel" type="button" value="Отменить" /></div>
         </div>
 

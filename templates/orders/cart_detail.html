@@ -13,6 +13,13 @@
             <h1>Ваша корзина пока пуста</h1>
     {% else %}
         <div class="cart">
+            <div class="cart_item_head">
+                    <div class="cart_img"></div>
+                    <div class="cart_des"></div>
+                    <div class="cart_box col"><div class="item_cart_h">Цена <br>за&nbsp;коробку</div></div>
+                    <div class="cart_qty"><div class="item_cart_h">Кол-во <br>коробок</div></div>
+                    <div class="cart_price"><div class="item_cart_h">Стоимость</div></div>
+                </div>
             {% for cart_item in cart_products %}
                 {% include 'orders/cart_item.html' %}
             {% endfor %}

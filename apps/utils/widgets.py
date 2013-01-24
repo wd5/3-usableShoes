@@ -2,7 +2,7 @@
 from django import forms
 import os
 from django.utils.safestring import mark_safe
-
+import settings
 
 class Redactor(forms.Textarea):
     toolbar = u'default' #'mini'
@@ -47,6 +47,45 @@ class RedactorClassic(Redactor):
 #class RedactorMicro(Redactor):
 #    toolbar = u'micro'
 
+
+class AdminImageWidget(forms.FileInput):
+    def render(self, name, value, attrs=None):
+        output = []
+        if value and hasattr(value, "url"):
+            output.append((u'<a target="_blank" href="%s">'
+                           u'<img src="%s" style="height: 100px;" /></a>'
+                           u'<a href="/admin/crop/%s/?next=/admin/members/members/%s/">Изменить миниатюру</a>'
+                           % (value.url, value.url, value.instance.id, value.instance.id)))
+        output.append(super(AdminImageWidget, self).render(name, value, attrs))
+        return mark_safe(u''.join(output))
+
+class AdminImageCrop(forms.FileInput):
+    path = ''
+    img_width = 200
+
+    def get_url(self, value):
+        return u'<br><a href="/admin/crop/%s/%s/">Изменить миниатюру</a>' \
+                % (self.path, value.instance.id)
+
+    def get_img(self, url):
+        file, ext = os.path.splitext(url)
+        file = u'%s_crop.jpg' % file
+        if os.path.isfile( settings.ROOT_PATH +file):
+            url_img = file
+        else:
+            url_img = url
+        return u'<img src="%s" style="width: %spx;" />' % (url_img, self.img_width)
+
+    def render(self, name, value, attrs=None):
+        if 'path' in self.attrs:
+            self.path = self.attrs['path']
+        if 'img_width' in self.attrs:
+            self.img_width = self.attrs['img_width']
+        output = []
+        if value and hasattr(value, "url"):
+            output.append((u'<a target="_blank" href="%s">%s</a>%s' % (value.url, self.get_img(value.url), self.get_url(value))))
+        output.append(super(AdminImageCrop, self).render(name, value, attrs))
+        return mark_safe(u''.join(output))
 
 class AdminImageWidget(forms.FileInput):
     def render(self, name, value, attrs=None):

@@ -2,6 +2,24 @@
 
 <div class="items{% if product %} similar_items{% endif %}">
     {% if catalog %}
+        {% if category.image %}
+                    <div class="carousel_out">
+                        <div class="carousel">
+                            <ul>
+                                <li>
+                                    <div class="carousel_img"><img src="{{ category.image.url }}" alt="" /></div>
+                                    <div class="carousel_h">{{ category.title }}</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div><!--/carousel_out-->
+        {% endif %}
+        {% if category.description %}
+            <div class="text our_shoes_text">
+                <p>{{ category.description }}</p>
+            </div>
+        {% endif %}
+
         {% autopaginate catalog 12 %}
         {% for item in catalog %}
             <div class="item">
@@ -15,7 +33,7 @@
                     <div class="item_price">{{ item.get_str_price }} <span>руб.</span></div>
                     <h3 class="item_name"><a href="{% if category %}/catalog/category/{{ category.slug }}/{{ item.get_short_url }}{% else %}{{ item.get_absolute_url }}{% endif %}">{{ item.title }}</a></h3>
                     {% if item.art %}<div class="item_art">«{{ item.art }}»</div>{% endif %}
-                    <input class="item_tocart" type="button" name="{{ item.id }}" value="" />
+                    <a href ="/show_modal_to_cart/?product_id={{ item.id }}" class="item_tocart"></a>
                 </div>
             </div>
         {% empty %}
@@ -24,6 +42,18 @@
         {% paginate %}
     {% else %}
         {% if not product %}
+                {% if category.image %}
+                    <div class="carousel_out">
+                        <div class="carousel">
+                            <ul>
+                                <li>
+                                    <div class="carousel_img"><img src="{{ category.image.url }}" alt="" /></div>
+                                    <div class="carousel_h">{{ category.title }}</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div><!--/carousel_out-->
+        {% endif %}
             <div class="item">
                 В данной категории пока нет товаров.
             </div>
@@ -45,7 +75,8 @@
                     {% if related_product.art %}
                         <div class="item_art">«{{ related_product.art }}»</div>
                     {% endif %}
-                    <input class="item_tocart" type="button" name="{{ related_product.id }}" value="" />
+                    <a href ="/show_modal_to_cart/?product_id={{ related_product.id }}" class="item_tocart"></a>
+
                 </div>
             </div>
         {% endfor %}

@@ -11,9 +11,20 @@ from django.core.urlresolvers import reverse
 from sorl.thumbnail import ImageField
 from mptt.models import MPTTModel, TreeForeignKey, TreeManager
 
+from sorl.thumbnail import ImageField  as sorl_ImageField, get_thumbnail
+
+from apps.utils.models import ImageCropMixin
+
+class ImageField(sorl_ImageField, models.ImageField):
+    pass
+
+def file_path(instance, filename):
+    return os.path.join('images','slider',  translify(filename).replace(' ', '_') )
+
 class Target(models.Model):
     title = models.CharField(verbose_name=u'назначение', max_length=100)
     order = models.IntegerField(verbose_name=u'Порядок сортировки',default=10)
+    is_opt = models.BooleanField(verbose_name = u'Оптовая', default=False)
     is_published = models.BooleanField(verbose_name = u'Опубликовано', default=True)
 
     # Managers
@@ -33,6 +44,8 @@ class Target(models.Model):
 class Category(models.Model):
     target = models.ForeignKey(Target, verbose_name=u'назначение', blank=True, null=True)
     title = models.CharField(verbose_name=u'название', max_length=100)
+    image = ImageField(verbose_name=u'Картинка', upload_to=file_path, blank=True, null=True,)
+    description = models.TextField(verbose_name=u'', blank=True, null=True,)
     title_menu = models.CharField(verbose_name=u'название категории в меню', max_length=100)
     slug = models.SlugField(verbose_name=u'Алиас', help_text=u'уникальное имя на латинице',)
     order = models.IntegerField(verbose_name=u'Порядок сортировки',default=10)
@@ -65,6 +78,7 @@ class Category(models.Model):
         sizes.sort()
         return sizes
 
+
 def str_price(price):
     if not price:
         return u'0'
@@ -94,6 +108,7 @@ class Size(models.Model):
         verbose_name_plural =_(u'sizes')
         ordering = ['-value',]
 
+
 def file_path_Product(instance, filename):
     return os.path.join('images','products',  translify(filename).replace(' ', '_') )
 
@@ -110,12 +125,14 @@ trade_choices = (
 )
 
 class Product(models.Model):
-    #category = models.ForeignKey(Category, verbose_name=u'Категория',)
     category = models.ManyToManyField(Category, verbose_name=u'Категория',)
+
     title = models.CharField(verbose_name=u'название', max_length=400)
     size = models.ManyToManyField(Size, verbose_name=u'размер')
+    count = models.PositiveIntegerField(verbose_name=u'количество в коробке', null=True)
     art = models.CharField(verbose_name=u'артикул', max_length=50, blank=True)
     material = models.CharField(verbose_name=u'материал', max_length=150, blank=True)
+    color = models.CharField(verbose_name=u'цвет', max_length=150, blank=True, null=True)
     description = models.TextField(blank=True, verbose_name=u'описание')
     price = models.DecimalField(verbose_name=u'Цена', decimal_places=2, max_digits=10,)
     image = ImageField(verbose_name=u'изображение', upload_to=file_path_Product)
@@ -140,10 +157,15 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         for item in self.get_categories():
-            return reverse('show_product',kwargs={'pk': '%s'%self.id,'slug':'%s'%item.slug,'s_type':'%s'%self.s_type})
+            #return reverse('show_product',kwargs={'pk': '%s'%self.id,'slug':'%s'%item.slug,'s_type':'%s'%self.s_type})
+            return reverse('show_product',kwargs={'pk': '%s'%self.id,'slug':'%s'%item.slug})
 
     def get_short_url(self):
-        return u'%s/%s/'% (self.s_type, self.id)
+        return u'%s/'% (self.id)
+
+    def get_str_price_for_box(self):
+        price = self.price * self.count
+        return str_price(price)
 
     def get_str_price(self):
         return str_price(self.price)
@@ -153,6 +175,14 @@ class Product(models.Model):
 
     def get_sizes(self):
         return self.size.all()
+
+    def get_min(self):
+        min = self.size.aggregate(min=models.Min('value'))
+        return min['min']
+
+    def get_max(self):
+        max = self.size.aggregate(max=models.Max('value'))
+        return max['max']
 
     def get_categories(self):
         return self.category.published()

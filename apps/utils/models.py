@@ -87,3 +87,27 @@ class BasePic(AbstractFile):
     )
     class Meta:
         abstract = True
+
+
+class ImageCropMixin(models.Model):
+    crop_size = [200, 200]
+
+    def get_image(self):
+        file, ext = os.path.splitext(self.image.url)
+        file = u'%s_crop.jpg' % file
+        if os.path.isfile(settings.ROOT_PATH +file):
+            return file
+        else:
+            return get_thumbnail(self.image, crop_size, crop='center', quality=99)
+
+    def admin_photo_preview(self):
+        if self.image:
+            im = get_thumbnail(self.image, '100', crop='center', quality=99)
+            return u'<span><img src="%s" width="100"></span>' % im.url
+        else:
+            return u'<span></span>'
+    admin_photo_preview.allow_tags = True
+    admin_photo_preview.short_description = u'Превью'
+
+    class Meta:
+        abstract = True

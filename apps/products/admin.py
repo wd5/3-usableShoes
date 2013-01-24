@@ -5,6 +5,8 @@ from django import forms
 from apps.utils.widgets import Redactor
 from sorl.thumbnail.admin import AdminImageMixin
 from mptt.admin import MPTTModelAdmin
+from sorl.thumbnail.admin import AdminImageMixin
+from apps.utils.widgets import AdminImageCrop
 
 from models import *
 
@@ -26,12 +28,20 @@ class CategoryAdminForm(forms.ModelForm):
             '/media/js/jquery.synctranslit.js',
             )
 
+class CategoryAdminForm(forms.ModelForm):
+    image = forms.ImageField(
+        widget=AdminImageCrop(attrs={'path': 'slider/photo'}), 
+        label=u'Изображение',
+        required = False,
+    )
+    model = Category
+
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('id','title','slug','order','is_published',)
-    list_display_links = ('id','title',)
+    list_display = ('title','slug','order','is_published',)
+    list_display_links = ('title',)
     list_editable = ('slug','order','is_published',)
     list_filter = ('target',)
-    #form = CategoryAdminForm
+    form = CategoryAdminForm
 
 admin.site.register(Category, CategoryAdmin)
 
@@ -58,7 +68,7 @@ class ProductAdmin(AdminImageMixin, admin.ModelAdmin):
     list_display_links = ('id','title','art',)
     list_editable = ('order','is_published',)
     list_filter = ('is_published','category','size',)
-    search_fields = ('title', 'description', 'art','material',)
+    search_fields = ('title', 'description', 'art','material', 'color')
     filter_horizontal = ('size','related_products','category')
     inlines = [ProductImageInline]
     form = ProductAdminForm

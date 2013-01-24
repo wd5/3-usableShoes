@@ -234,7 +234,7 @@ class AddProdictToCartView(View):
         if not request.is_ajax():
             return HttpResponseRedirect('/')
         else:
-            if 'product_id' not in request.POST and 'size_id' not in request.POST:
+            if 'product_id' not in request.POST and 'count' not in request.POST:
                 return HttpResponseBadRequest()
             else:
                 product_id = request.POST['product_id']
@@ -242,25 +242,16 @@ class AddProdictToCartView(View):
                     product_id = int(product_id)
                 except ValueError:
                     return HttpResponseBadRequest()
-                size_id = request.POST['size_id']
-                if size_id != 'empty':
-                    try:
-                        size_id = int(size_id)
-                    except ValueError:
-                        return HttpResponseBadRequest()
+                count = request.POST['count']
+                try:
+                    count = int(count)
+                except ValueError:
+                    return HttpResponseBadRequest()
 
             try:
                 product = Product.objects.get(id=product_id)
             except Product.DoesNotExist:
                 return HttpResponseBadRequest()
-
-            if size_id != 'empty':
-                try:
-                    size = Size.objects.get(id=size_id)
-                except Size.DoesNotExist:
-                    return HttpResponseBadRequest()
-            else:
-                size = product.get_sizes()[0]
 
             cookies = request.COOKIES
             response = HttpResponse()
@@ -325,7 +316,7 @@ class AddProdictToCartView(View):
                 cart_product = CartProduct.objects.get(
                     cart=cart,
                     product=product,
-                    size=size,
+                    count=count,
                 )
                 if cart_product.is_deleted:
                     cart_product.is_deleted = False
@@ -336,7 +327,7 @@ class AddProdictToCartView(View):
                 CartProduct.objects.create(
                     cart=cart,
                     product=product,
-                    size=size,
+                    count=count,
                 )
             is_empty = True
             cart_products_count = cart.get_products_count()
@@ -359,6 +350,37 @@ class AddProdictToCartView(View):
             return response
 
 add_product_to_cart = csrf_exempt(AddProdictToCartView.as_view())
+
+class ShowModalToCartView(View):
+    def get(self, request, *args, **kwargs):
+        if not request.is_ajax():
+            return HttpResponseRedirect('/')
+        else:
+            if 'product_id' not in request.GET:
+                return HttpResponseBadRequest()
+            else:
+                product_id = request.GET['product_id']
+                try:
+                    product_id = int(product_id)
+                except ValueError:
+                    return HttpResponseBadRequest()
+
+            try:
+                product = Product.objects.get(id=product_id)
+            except Product.DoesNotExist:
+                return HttpResponseBadRequest()
+
+            html = render_to_string(
+                'orders/block_modal_to_cart.html',
+                    {
+                    'product': product,
+                }
+            )
+            response = HttpResponse()
+            response.content = html
+            return response
+
+show_modal_to_cart = csrf_exempt(ShowModalToCartView.as_view())
 
 class DeleteProductFromCart(View):
     def post(self, request, *args, **kwargs):
@@ -428,39 +450,6 @@ class RestoreProductToCart(View):
 
 restore_product_to_cart = csrf_exempt(RestoreProductToCart.as_view())
 
-class ChangeSizeCartProduct(View):
-    def post(self, request, *args, **kwargs):
-        if not request.is_ajax():
-            return HttpResponseRedirect('/')
-        else:
-            if 'cart_product_id' not in request.POST and 'new_size_id' not in request.POST:
-                return HttpResponseBadRequest()
-            else:
-                cart_product_id = request.POST['cart_product_id']
-                new_size_id = request.POST['new_size_id']
-                try:
-                    cart_product_id = int(cart_product_id)
-                    new_size_id = int(new_size_id)
-                except ValueError:
-                    return HttpResponseBadRequest()
-
-            try:
-                cart_product = CartProduct.objects.get(id=cart_product_id)
-            except CartProduct.DoesNotExist:
-                return HttpResponseBadRequest()
-
-            try:
-                size = Size.objects.get(id=new_size_id)
-            except Size.DoesNotExist:
-                return HttpResponseBadRequest()
-
-            cart_product.size = size
-            cart_product.save()
-
-            return HttpResponse()
-
-change_size_cart_product = csrf_exempt(ChangeSizeCartProduct.as_view())
-
 class ChangeCartCountView(View):
     def post(self, request, *args, **kwargs):
         if not request.is_ajax():
@@ -520,7 +509,6 @@ class AddSameProductView(View):
             new_product = CartProduct.objects.create(
                 cart=cart_product.cart,
                 product=cart_product.product,
-                size=size,
             )
 
             cart_str_total = new_product.cart.get_str_total()

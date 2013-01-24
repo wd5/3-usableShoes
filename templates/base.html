@@ -13,6 +13,7 @@
     <script type="text/javascript" src="/media/js/jquery-ui-1.8.24.custom.min.js"></script>
     <script type="text/javascript" src="/media/js/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
     <link rel="stylesheet" href="/media/js/fancybox/jquery.fancybox-1.3.4.css" type="text/css" media="screen" />
+    <script type="text/javascript" src="/media/js/jquery.jcarousel.min.js"></script>
     <script type="text/javascript" src="/media/js/script.js"></script>
     {% block extend_js %}{% endblock %}
     <title>
@@ -57,9 +58,7 @@
 	<div class="main">
         <div class="left col">
             <div class="left_in">
-                <div class="catalog_menu">
                     {% block_catalog_menu request.path %}
-                </div><!--/catalog_menu-->
 
                 {% block banner %}{% block_banner %}{% endblock %}
             </div><!--/left_in-->

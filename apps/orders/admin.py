@@ -5,7 +5,7 @@ from apps.orders.models import Cart,CartProduct,Order,OrderProduct
 
 class CartProductInlines(admin.TabularInline):
     model = CartProduct
-    readonly_fields = ('product','size',)
+    readonly_fields = ('product',)
     extra = 0
 
 class CartAdmin(admin.ModelAdmin):
@@ -16,7 +16,7 @@ class CartAdmin(admin.ModelAdmin):
 
 class OrderProductInlines(admin.TabularInline):
     model = OrderProduct
-    readonly_fields = ('product','count','size',)
+    readonly_fields = ('product','count',)
     extra = 0
 
 class OrderAdmin(admin.ModelAdmin):

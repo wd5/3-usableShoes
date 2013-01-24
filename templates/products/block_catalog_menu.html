@@ -1,8 +1,20 @@
-{% for target in menu %}
-    <div class="catalog_menu_h">{{ target.title|safe }}</div>
-    <ul>
-        {% for category in target.get_categories %}
-            <li {% if current == category.get_absolute_url %}class="curr"{% endif %}><a href="{{ category.get_absolute_url }}">{{ category.title_menu|safe }}</a></li>
-        {% endfor %}
-    </ul>
-{% endfor %}
+<div class="catalog_menu">
+	{% for target in opt_menu %}
+					<div class="catalog_menu_spec">
+						<div class="catalog_menu_h">{{ target.title|safe }}</div>
+						<ul>
+					        {% for category in target.get_categories %}
+					            <li {% if current == category.get_absolute_url %}class="curr"{% endif %}><a href="{{ category.get_absolute_url }}">{{ category.title_menu|safe }}</a></li>
+					        {% endfor %}
+						</ul>
+					</div><!--/catalog_menu_spec-->
+	{% endfor %}
+	{% for target in menu %}
+	    <div class="catalog_menu_h">{{ target.title|safe }}</div>
+	    <ul>
+	        {% for category in target.get_categories %}
+	            <li {% if current == category.get_absolute_url %}class="curr"{% endif %}><a href="{{ category.get_absolute_url }}">{{ category.title_menu|safe }}</a></li>
+	        {% endfor %}
+	    </ul>
+	{% endfor %}
+</div>

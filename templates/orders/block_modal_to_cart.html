@@ -1,0 +1,62 @@
+{% load thumbnail %}
+<div class="item_page item_page_modal parent_blk">
+	<h1>Добавление в заказ</h1>
+	
+	<div class="item_l col">
+                <div class="item_img_zl">
+                    {% thumbnail product.image "162x162" as im %}
+                        <div class="product_img"><img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="" /></div>
+                    {% endthumbnail %}
+                </div>
+	</div><!--/item_l-->
+	
+	<div class="item_r col">
+            <h2>{{ product.title }} {% if product.art %}<span class="item_art">«{{ product.art }}»</span>{% endif %} </h2>
+
+            <div class="text">
+                <p>{{ product.description|safe }}</p>
+            </div>
+
+            {% if product.material %}
+                <div class="item_mat"><strong>Материал:</strong> {{ product.material }}</div>
+            {% endif %}
+            {% if product.color %}
+                <div class="item_mat"><strong>Цвет:</strong> {{ product.color }}</div>
+            {% endif %}
+	       {% if product.count %}
+                <div class="item_mat"><strong>Количество в коробке:</strong>{{ product.count }} шт.</div>
+            {% endif %}
+                    
+            <div class="item_note"><em>В коробке размеры от {{ product.get_min }} до {{ product.get_max }}</em></div>
+
+            <div class="item_page_price">{{ product.get_str_price }} <span>руб.</span></div>
+            <div class="item_page_price_note col">оптовая цена за штуку</div>
+		
+                    <div class="item_cart">
+                        <table class="item_cart_table">
+                            <tr>
+                                <td><div class="item_cart_h">Цена <br />за&nbsp;коробку</div></td>
+                                <td><div class="item_cart_h">Кол-во <br />коробок</div></td>
+                                <td><div class="item_cart_h">Стоимость</div></td>
+                            </tr>
+                            <tr class="item_cart_line">
+                                <td><div class="item_cart_price">{{ product.get_str_price_for_box }} <span>руб.</span></div></td>
+                                <td>
+                                    <div class="cart_qty">
+                                        <div><input class="btn2 cart_qty_btn" type="button" value="1" /></div>
+                                        <div class="cart_qty_modal" style="display: none;">
+                                            <h3>Изменить количество</h3>
+                                            <p><span class="cart_qty_price"><span>{{ product.get_str_price_for_box }}</span> руб.</span> × <input class="cart_qty_modal_text" type="text" value="1"/> = <span class="cart_qty_total_price"><span>{{ product.get_str_price_for_box }}</span> руб.</span></p>
+                                            <div><input class="cart_qty_modal_ok" type="button" value="Сохранить" /> <input class="cart_qty_modal_cancel" type="button" value="Отменить" /></div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><div class="item_cart_price"><div>{{ product.get_str_price_for_box }}</div> <span>руб.</span></div></td>
+                            </tr>
+                        </table>
+                        <div class="item_cart_h"></div>
+                    </div>
+		
+		<div class="item_cart_btn"><input class="btn1 buy_btn" name="{{ product.id }}" type="button" value="Купить"></div>
+	</div><!--/item_r-->
+</div>

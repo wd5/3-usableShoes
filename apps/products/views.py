@@ -39,14 +39,7 @@ class ShowCategory(DetailView):
     def get_context_data(self, **kwargs):
         context = super(ShowCategory, self).get_context_data()
         products = self.object.get_products()
-        if products.filter(s_type='female'): setattr(self.object, 'female', True)
-        if products.filter(s_type='male'): setattr(self.object, 'male', True)
-        if products.filter(s_type='child'): setattr(self.object, 'child', True)
-        s_type = self.kwargs.get('s_type', None)
-        if s_type == 'all':
-            pass
-        else:
-            products = products.filter(s_type=s_type)
+
         context['catalog'] = products
         sizes = []
         sizes_ids = []
@@ -76,9 +69,6 @@ class ShowProduct(DetailView):
         try:
             category = self.object.category.get(slug=cat_slug)
             cat_products = category.get_products()
-            if cat_products.filter(s_type='female'): setattr(category, 'female', True)
-            if cat_products.filter(s_type='male'): setattr(category, 'male', True)
-            if cat_products.filter(s_type='child'): setattr(category, 'child', True)
         except:
             category = False
         context['category'] = category
@@ -145,7 +135,7 @@ class LoadCatalogView(View):
         if not request.is_ajax():
             return HttpResponseRedirect('/')
         else:
-            if 'size' not in request.POST or 's_type' not in request.POST or 'id_cat' not in request.POST:
+            if 'size' not in request.POST or 'id_cat' not in request.POST:
                 return HttpResponseBadRequest()
             try:
                 id_cat = int(request.POST['id_cat'])
@@ -159,21 +149,14 @@ class LoadCatalogView(View):
 
             products = curr_categ.get_products()
             size = request.POST['size']
-            s_type = request.POST['s_type']
             if size != 'all':
                 try:
                     size = int(size)
                 except ValueError:
                     return HttpResponseBadRequest()
-                if s_type == 'all':
-                    queryset = products.filter(size__in=[size])
-                else:
-                    queryset = products.filter(s_type=s_type, size__in=[size])
+                queryset = products.filter(size__in=[size])
             else:
-                if s_type == 'all':
-                    queryset = products
-                else:
-                    queryset = products.filter(s_type=s_type)
+                queryset = products
 
             items_html = render_to_string(
                 'products/products_list.html',
