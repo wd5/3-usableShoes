@@ -132,7 +132,6 @@ class OrderFromView(FormView):
                     order=new_order,
                     count=cart_product.count,
                     product=cart_product.product,
-                    size=cart_product.size,
                 )
 
             if profile:
@@ -335,7 +334,7 @@ class AddProdictToCartView(View):
             cart_products_text = u''
             if cart_products_count:
                 is_empty = False
-                cart_products_text = u'товар%s' % (choose_plural(cart_products_count, (u'', u'а', u'ов')))
+                cart_products_text = u'короб%s' % (choose_plural(cart_products_count, (u'ка', u'ки', u'ок')))
 
             cart_html = render_to_string(
                 'orders/block_cart.html',

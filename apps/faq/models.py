@@ -32,7 +32,7 @@ from django.core.mail.message import EmailMessage
 class Question(models.Model):
     #category = models.ForeignKey(QuestionCategory, verbose_name=u'Категория', default=1)
     pub_date = models.DateTimeField(verbose_name = u'Дата', default=datetime.datetime.now)
-    name = models.CharField(max_length = 150, verbose_name = u'Имя')
+    name = models.CharField(max_length = 150, verbose_name = u'Имя', blank=True)
     email = models.CharField(verbose_name=u'E-mail',max_length=75)
     question = models.TextField(verbose_name = u'Вопрос')
     answer = models.TextField(verbose_name = u'Ответ', blank = True)

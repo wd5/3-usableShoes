@@ -12,12 +12,7 @@ class QuestionForm(forms.ModelForm):
         required=True
     )
     name = forms.CharField(
-        widget=forms.TextInput(
-            attrs={
-                'required':'required',
-            }
-        ),
-        required=True
+        required=False
     )
     question = forms.CharField(
         widget=forms.Textarea(

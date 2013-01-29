@@ -14,12 +14,12 @@
             {% for question in questions %}
                 <div class="faq">
                     <div class="question">
-                        <div class="faq_author">{{ question.name }}, {{ question.pub_date|date:"j E Y" }}</div>
+                        <div class="faq_author">{% if question.name %}{{ question.name }}, {% endif %}{{ question.pub_date|date:"j E Y" }}</div>
                         <div class="faq_text"><p>{{ question.question }}</p></div>
                     </div>
                     {% if question.answer %}
                         <div class="answer">
-                            <div class="faq_author">{{ question.author }}, {{ question.ans_date|date:"j E Y" }}</div>
+                            <div class="faq_author">{% if question.author %}{{ question.author }}, {% endif %}{{ question.ans_date|date:"j E Y" }}</div>
                             <div class="faq_text"><p>{{ question.answer }}</p></div>
                         </div>
                     {% endif %}

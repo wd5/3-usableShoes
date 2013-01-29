@@ -69,7 +69,7 @@ def block_cart(context):
         if cart_products_count:
             cart_total = cart.get_str_total()
             is_empty = False
-            cart_products_text = u'товар%s' % (choose_plural(cart_products_count, (u'', u'а', u'ов')))
+            cart_products_text = u'короб%s' % (choose_plural(cart_products_count, (u'ка', u'ки', u'ок')))
     return {
         'is_empty': is_empty,
         'cart_products_count': cart_products_count,
