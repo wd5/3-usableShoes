@@ -1,0 +1,36 @@
+@charset "utf-8";
+
+
+/*6-7*/
+.btn1, .btn2,
+.menu li,
+.col,
+.top_h,
+.catalog_submenu li,
+.item,
+.item_price,
+.item_imgs_menu li,
+.item_page_price,
+.cart_img, .cart_des, .cart_qty, .cart_price,
+.cart_qty_price, .cart_qty_total_price,
+.cart_qty_modal_ok,
+.cart_qty_modal_cancel,
+.order_form_h_num, .order_form_h h2,
+.input1,
+.order_menu li,
+.history_num, .history_price,
+ {
+	*display:inline;
+	*zoom:1;
+}
+.some {
+	*position:relative;
+	*zoom:1;
+}
+/*6-7*/
+
+
+
+/*6*/
+/*6*/
+

@@ -24,7 +24,7 @@
                 <div class="item_mat"><strong>Цвет:</strong> {{ product.color }}</div>
             {% endif %}
 	       {% if product.count %}
-                <div class="item_mat"><strong>Количество в коробке:</strong>{{ product.count }} шт.</div>
+                <div class="item_mat"><strong>Количество в коробке:</strong> {{ product.count }} шт.</div>
             {% endif %}
                     
             <div class="item_note"><em>В коробке размеры от {{ product.get_min }} до {{ product.get_max }}</em></div>

@@ -176,7 +176,7 @@ h3 {
 .menu li {
 	display: inline-block;
 	vertical-align: top;
-	margin: 0 14px 0 0;
+	margin: 0 16px 0 0;
 	height: 34px;
 	padding: 15px 9px 0 9px;
 }
@@ -201,11 +201,6 @@ h3 {
 }
 .menu_cab a {
 	color: #fcfbe8;
-}
-.logout {
-	font-size: 13px;
-	font-weight: normal;
-	margin-left: 10px;
 }
 /*menu-end*/
 
@@ -317,12 +312,6 @@ h3 {
 	font-weight: bold;
 	text-decoration: none;
 }
-.catalog_menu_spec {
-	border: 5px solid #feef20;
-	width: 143px;
-	padding: 12px 12px 0 14px;
-	margin: 0 0 24px -19px;
-}
 /*/catalog_menu*/
 
 
@@ -418,65 +407,6 @@ h3 {
 	height: 100%;
 }
 /*/catalog_submenu*/
-
-
-
-
-/*carousel*/
-.carousel_out {
-	background: url('../img/carousel_bg.png') no-repeat;
-	padding: 32px 0 0 0;
-	margin: -32px 0 0 0;
-	width: 604px;
-	height: 340px;
-}
-.jcarousel-clip {
-	width: 604px;
-	height: 340px;
-	overflow: hidden;
-
-}
-#carousel {
-	width: 604px;
-	height: 340px;
-}
-.carousel li {
-	float: left;
-	position: relative;
-	width: 604px;
-}
-.carousel_h {
-	font-size: 24px;
-	line-height: 30px;
-	font-weight: bold;
-	position: absolute;
-	top: 186px;
-	left: 334px;
-	background: #f3f3f3;
-	width: 236px;
-	height: 68px;
-	padding: 12px 16px;
-}
-.jcarousel-prev, .jcarousel-next {
-	background: url('../img/carousel_arrs.png') no-repeat;
-	position: absolute;
-	top: 86px;
-	width: 31px;
-	height: 32px;
-	cursor: pointer;
-}
-.jcarousel-prev:active, .jcarousel-next:active {
-	top: 88px;
-}
-.jcarousel-prev {
-	left: -10px;
-}
-.jcarousel-next {
-	background-position: -41px 0;
-	left: 574px;
-}
-/*/carousel*/
-
 
 
 
@@ -589,9 +519,6 @@ h2 .item_art {
 	font-size: 18px;
 	white-space: nowrap;
 }
-.item_note {
-	margin-top: 4px;
-}
 
 .item_share {
 	margin-bottom: 36px;
@@ -626,7 +553,7 @@ h2 .item_art {
 }
 
 .item_mat {
-	margin-top: 12px;
+	margin-bottom: 36px;
 }
 .item_mat strong {
 	font-size: 16px;
@@ -639,25 +566,14 @@ h2 .item_art {
 	background: url('../img/yell.png') no-repeat center 0;
 	color: #393502;
 	display: inline-block;
-	height: 35px;
-	padding: 14px 9px 0 9px;
-	margin: 16px 0 24px 0;
+	height: 37px;
+	padding: 12px 9px 0 9px;
 }
 .item_page_price span {
 	font-size: 12px;
 	font-weight: normal;
 	position: relative;
 	top: -4px;
-}
-.item_page_price_note {
-	line-height: 14px;
-	font-style: italic;
-	width: 90px;
-	margin: 22px 0 0 10px;
-}
-.item_cart_btn {
-	text-align: right;
-	padding-right: 15%;
 }
 .buy_btn {
 	background-position: 0 -40px;
@@ -672,54 +588,6 @@ h2 .item_art {
 	font-size: 24px;
 	line-height: 30px;
 	margin-bottom: 24px;
-}
-
-.item_cart_table {
-	width: 100%;
-}
-.item_cart_h {
-	color: #707070;
-	text-transform: uppercase;
-	font-size: 12px;
-	line-height: 14px;
-}
-.item_cart_line td {
-	vertical-align: middle;
-	padding: 6px 0 6px 0;
-}
-.item_cart_price {
-	font-weight: bold;
-	font-size: 18px;
-	line-height: 24px;
-}
-.item_cart_price span {
-	font-size: 12px;
-	font-weight: normal;
-	position: relative;
-	top: -4px;
-}
-.item_cart_price_total {
-	border-top: 1px solid #d8d8d8;
-	padding-top: 6px;
-}
-
-.item_page_modal {
-	width: 680px;
-}
-.item_page_modal h1 {
-	font-size: 30px;
-	line-height: 36px;
-	margin-bottom: 36px;
-}
-.item_page_modal .item_l {
-	width: 200px;
-}
-.item_page_modal .item_r {
-	width: 440px;
-}
-.item_page_modal .item_cart_btn {
-	text-align: right;
-	padding-right: 25%;
 }
 /*/item_page*/
 
@@ -739,20 +607,15 @@ h2 .item_art {
 	vertical-align: top;
 }
 .cart_img {
-	width: 22%;
+	width: 27%;
 }
 .cart_des {
-	width: 25%;
+	width: 38%;
 }
 .cart_item .item_art {
-	margin-bottom: 6px;
+	margin-bottom: 16px;
 }
-.cart_box {
-	width: 15%;
-}
-.cart_box_qty {
-	color: #707070;
-}
+
 .cart_size {
 	margin-bottom: 12px;
 }
@@ -771,7 +634,7 @@ h2 .item_art {
 .cart_qty {
 	width: 15%;
 	position: relative;
-	padding-top: 0px;
+	padding-top: 6px;
 }
 .cart_qty_modal {
 	/*display: none;*/
@@ -1571,9 +1434,6 @@ h2 .item_art {
 	display: block;
 	margin: 0 0 18px 0;
 }
-.edit_info_form .reg_submit {
-	margin-left: 0;
-}
 
 /*/edit_info_form*/
 
@@ -1610,14 +1470,6 @@ h2 .item_art {
 .img_right {
 	float:right;
 	margin:0 0 0 18px; 
-}
-.our_shoes_text {
-	font-size: 16px;
-	line-height: 24px;
-	margin: -36px 0 54px 0;
-	position: relative;
-	clear: both;
-	z-index: 10;
 }
 /*/text-page*/
 /*-----------------PAGE-END-----------------*/
