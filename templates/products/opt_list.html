@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% load thumbnail pagination_tags siteblocks_extras orders_extras %}
+
+{% if page.title %}
+    {% block title %}
+        {{ page.title }} &mdash;
+    {% endblock %}
+{% endif %}
+
+{% block center_col %}
+    <div class="text text_page">
+        <h1>{{ page.title }}</h1>
+        {% if not request.GET.page or request.GET.page == '1' %}
+            {{ page.content|safe }}
+        {% endif %}
+    </div>
+
+    <div class="items">
+        {% if catalog %}
+            {% autopaginate catalog 5 %}
+            {% for item in catalog %}
+                <div class="item">
+                    <div class="item_in parent_blk">
+                        <div class="item_img"><a
+                                href="{% if category %}/catalog/category/{{ category.slug }}/{{ item.get_short_url }}{% else %}{{ item.get_absolute_url }}{% endif %}" class="product_img">
+                            {% thumbnail item.image "120x120" as im %}
+                                <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" style="margin:{{ im|margin:"120x120" }}" alt="" />
+                            {% endthumbnail %}
+                        </a></div>
+                        <div class="item_price">{{ item.get_str_price }} <span>руб.</span></div>
+                        <h3 class="item_name"><a href="{% if category %}/catalog/category/{{ category.slug }}/{{ item.get_short_url }}{% else %}{{ item.get_absolute_url }}{% endif %}">{{ item.title }}</a></h3>
+                        {% if item.art %}<div class="item_art">«{{ item.art }}»</div>{% endif %}
+                        <a href ="/show_modal_to_cart/?product_id={{ item.id }}" class="item_tocart"></a>
+                    </div>
+                </div>
+            {% empty %}
+
+            {% endfor %}
+            {% paginate %}
+        {% endif %}
+    </div><!--/items-->
+{% endblock %}
+
+{% block search_class %}{% endblock %}
+
+{% block cartbox %}
+    {% block_cart %}
+{% endblock %}

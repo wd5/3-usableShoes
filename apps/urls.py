@@ -2,7 +2,7 @@
 from django.conf.urls.defaults import patterns, include, url
 from django.contrib.auth import views as auth_views
 from django.views.decorators.csrf import csrf_exempt
-from apps.products.views import show_catalog_by_type, show_category, show_product, clients_list, load_catalog, search_products
+from apps.products.views import show_catalog_by_type, show_category, show_product, clients_list, load_catalog, search_products, opt_list
 from apps.spam.views import add_subscribe, cancel_subscribe
 from apps.users.views import show_cabinet, edt_profile_info, show_profile_form, registration_form
 from apps.faq.views import review_list
@@ -26,6 +26,7 @@ urlpatterns = patterns('',
 
     url(r'^faq/', include('apps.faq.urls')),
     url(r'^reviews/$',review_list, name='reviews_list'),
+    url(r'^opt/$',opt_list),
 
     (r'^add_subscribe_email/$', add_subscribe),
     (r'^cancel_subscribe/(?P<email>[^/]+)/$', cancel_subscribe),

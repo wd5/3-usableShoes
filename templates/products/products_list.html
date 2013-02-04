@@ -2,27 +2,26 @@
 
 <div class="items{% if product %} similar_items{% endif %}">
     {% if catalog %}
-        {% if not request.GET.page  or request.GET.page == 1 %}
-            {% if category.image %}
-                        <div class="carousel_out">
-                            <div class="carousel">
-                                <ul>
-                                    <li>
-                                        <div class="carousel_img"><img src="{{ category.image.url }}" alt="" /></div>
-                                        <div class="carousel_h">{{ category.title }}</div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div><!--/carousel_out-->
-            {% endif %}
-            {% if category.description %}
-                <div class="text our_shoes_text">
-                    <p>{{ category.description }}</p>
+        {% if category.image %}
+            <div class="carousel_out">
+                <div class="carousel">
+                    <ul>
+                        <li>
+                            <div class="carousel_img"><img src="{{ category.image.url }}" alt="" /></div>
+                            <div class="carousel_h">{{ category.title }}</div>
+                        </li>
+                    </ul>
                 </div>
-            {% endif %}
+            </div><!--/carousel_out-->
+        {% endif %}
+        {% if category.description %}
+            <div class="text our_shoes_text">
+                <p>{{ category.description }}</p>
+            </div>
         {% endif %}
 
-        {% autopaginate catalog 90 %}
+
+        {% autopaginate catalog 12 %}
         {% for item in catalog %}
             <div class="item">
                 <div class="item_in parent_blk">

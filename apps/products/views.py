@@ -8,6 +8,7 @@ from django.db.models import Q
 from django.views.generic.simple import direct_to_template
 
 from django.views.generic import ListView, DetailView, DetailView, TemplateView, View
+from apps.pages.models import Page
 
 from models import Category, Product, Client
 
@@ -165,3 +166,19 @@ class LoadCatalogView(View):
             return HttpResponse(items_html)
 
 load_catalog = csrf_exempt(LoadCatalogView.as_view())
+
+class ShowOptListView(TemplateView):
+    template_name = 'products/opt_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ShowOptListView, self).get_context_data(**kwargs)
+        products = Product.objects.published()
+        try:
+            page = Page.objects.get(url='/opt/')
+        except:
+            page = False
+        context['catalog'] = products.filter(category__target__is_opt=True)
+        context['page'] = page
+        return context
+
+opt_list = ShowOptListView.as_view()
